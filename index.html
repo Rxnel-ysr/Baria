@@ -36,7 +36,10 @@
         };
 
     </script>
-    <script type="module" src="./main.js" defer></script>
+    <script type="module" src="./main.js" onload="let el = document.getElementById('script');
+            el.setAttribute('src', `${window.location.origin}/main.js`);
+            el.removeAttribute('onload');
+            el.removeAttribute('id')" id="script" defer></script>
 
 </body>
 

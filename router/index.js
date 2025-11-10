@@ -4,7 +4,7 @@ import Drill from "../src/pages/Drill.js";
 import Home from "../src/pages/Home.js";
 
 Router.setup({
-    prefix: null,
+    prefix: '/Baria',
     titleId: 'title',
     routes: [
         {
