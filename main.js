@@ -10,7 +10,7 @@ import env from './env.json' with {type: 'json'}
 
 let app = createRoot(App, "#app", "App");
 Router.init()
-console.log(app);
+// console.log(app);
 
 
 const socket = new WebSocket(`ws://${location.hostname}:${env.server}`);
