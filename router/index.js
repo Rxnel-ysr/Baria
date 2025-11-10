@@ -16,9 +16,6 @@ Router.setup({
             uri: '/drill',
             title: "Baria - Drill",
             component: () => comp(Drill, { text: "DRILLLLLLLLL" })
-        },
-        {
-            uri
         }
     ]
 })
