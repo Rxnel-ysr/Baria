@@ -1,60 +1,12 @@
-import { setRegression, triggerRerender } from "./vdom.hooks.js";
-
-const Router = {
-    routes: {},
-    errors: {},
-    option: {
+class Router {
+    routes = {}
+    errors = {}
+    option = {
         prefix: '',
         default: null,
         titleId: null,
         titleEl: null,
-    },
-
-    /**
-     * 
-     * @param {String} uri 
-     * @param {Object} comp 
-     * @returns 
-     */
-    register: (uri, comp) => {
-        if (Router.option?.prefix) {
-            uri = `${Router.option?.prefix}${uri}`
-            console.log(uri);
-
-        }
-        Router.routes[uri] = comp
-        return Router
-    },
-
-    /**
-     * 
-     * @param {String} uri 
-     */
-    go: (uri) => {
-        if (uri !== location.pathname) {
-            history.pushState({ path: uri }, "", uri)
-            Router.trigger()
-        }
-    },
-
-    routerView: (path = location.pathname) => {
-
-        let route = Router.routes[path];
-        console.log(path, route);
-        if (route) {
-            if (Router.option?.titleId && route?.title) {
-                if (!Router.option?.titleEl) {
-                    Router.option.titleEl = document.getElementById(Router.option.titleId)
-                }
-                Router.option.titleEl.innerText = route.title
-            }
-
-            return Router.routes[path].component()
-        }
-        else if (typeof Router.option?.default == 'function') {
-            return Router.option.default()
-        }
-    },
+    }
 
     /**
      * @template {{
@@ -69,18 +21,91 @@ const Router = {
      * 
      * @param {T} option 
      */
-    setup: (option = {}) => {
-        Router.option = option
+    static make = (option = {}) => {
+        return new Router(option)
+    }
+
+    /**
+     * @template {{
+     *  prefix: String|null,
+     *  default: Function|null,
+     *  routes: Array<{
+     *      uri: String,
+     *      title: String|null,
+     *      component: Function
+     *  }>
+     * }} T
+     * 
+     * @param {T} option 
+     */
+    constructor(option = {}) {
+        this.option = option
         if (Array.isArray(option?.routes)) {
             option.routes.forEach(route => {
-                Router.register(route.uri, { component: route.component, title: route?.title })
+                this.register(route.uri, { component: route.component, title: route?.title })
             });
         }
-    },
+    }
 
-    init: () => {
-        Router.trigger = triggerRerender
+    /**
+     * 
+     * @param {String} uri 
+     * @param {() => Object} comp 
+     * @returns 
+     */
+    register = (uri, comp) => {
+        if (this.option?.prefix) {
+            uri = `${this.option?.prefix}${uri}`
+            console.log(uri);
+
+        }
+        this.routes[uri] = comp
+        return this
+    }
+
+    /**
+     * 
+     * @param {String} uri 
+     */
+    go = (uri) => {
+        if (uri !== location.pathname) {
+            history.pushState({ path: uri }, "", uri)
+            this.trigger()
+        }
+    }
+
+    /**
+     * 
+     * @param {String} [path=location.pathname] 
+     * @returns {Object} Component
+     */
+    routerView = (path = location.pathname) => {
+        let route = this.routes[path];
+        // console.log(path, route);
+        if (route) {
+            if (this.option?.titleId && route?.title) {
+                if (!this.option?.titleEl) {
+                    this.option.titleEl = document.getElementById(this.option.titleId)
+                }
+                this.option.titleEl.innerText = route.title
+            }
+
+            return this.routes[path].component()
+        }
+        else if (typeof this.option?.default == 'function') {
+            return this.option.default()
+        }
+    }
+
+    /**
+     * 
+     * @param {Function} trigger Function to trigger reload
+     */
+    init = (trigger) => {
+        this.trigger = trigger
     }
 }
 
-export default Router;
+let create = Router.make
+
+export { Router, create };

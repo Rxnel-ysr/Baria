@@ -35,6 +35,7 @@ const forgot = (n = 1) => {
 };
 
 const resetPreview = () => {
+    // previewComponent = headPreview
     let current = headPreview
 
     while (current?.next) {
@@ -55,12 +56,14 @@ const trailMaker = (n = 1) => {
 
 const allocate = (n) => {
     let start = currentComponent.hookNode
+    let actual = n - 1;
     // delete start.value
     // console.log("allocated", start);
-    let [head, tail] = trailMaker(n - 1)
-
-    tail.next = start.next
-    start.next = head
+    if (actual > -1) {
+        let [head, tail] = trailMaker(actual)
+        tail.next = start.next
+        start.next = head
+    }
     // console.log("allocated end", start);
 }
 
@@ -344,7 +347,7 @@ function createRoot(fn, target, id = 'default') {
             resetContext();
             resetPreview();
 
-            console.log(comp);
+            // console.log(comp);
             const newVNode = comp.renderFn();
             // console.log('Head preview',headPreview)
 

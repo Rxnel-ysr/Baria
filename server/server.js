@@ -19,42 +19,42 @@ const coreFiles = [
     'main.js',
     'vdom.js',
     'vdom.hooks.js',
-    'hmr.store.js'
+    'state.js'
 ];
+if (env.hmr) {
+    const { broadcast } = createWSServer(env.server);
+    let prev, prevRepeat = 1;
 
-const { broadcast } = createWSServer(env.server);
-let prev, prevRepeat = 1;
+    watch(root, (filePath) => {
+        const relativePath = '/' + path.relative(root, filePath).replace(/\\/g, '/');
 
-watch(root, (filePath) => {
-    const relativePath = '/' + path.relative(root, filePath).replace(/\\/g, '/');
+        if (coreFiles.includes(path.basename(filePath))) return;
 
-    if (coreFiles.includes(path.basename(filePath))) return;
+        if (relativePath === prev) {
+            prevRepeat++;
+        } else {
+            prevRepeat = 1;
+            prev = relativePath;
+        }
 
-    if (relativePath === prev) {
-        prevRepeat++;
-    } else {
-        prevRepeat = 1;
-        prev = relativePath;
-    }
+        const time = new Date().toLocaleTimeString();
+        const emoji = prevRepeat > 1 ? '🔁' : '🔄';
 
-    const time = new Date().toLocaleTimeString();
-    const emoji = prevRepeat > 1 ? '🔁' : '🔄';
+        console.log(
+            `%c[HMR]%c ${emoji} ${relativePath}%c${prevRepeat > 1 ? ` (${prevRepeat}x)` : ''} %cat ${time}`,
+            'color: #42b883; font-weight: bold',
+            'color: #ffffff',
+            'color: #42b883; font-weight: bold',
+            'color: #888; font-style: italic'
+        );
 
-    console.log(
-        `%c[HMR]%c ${emoji} ${relativePath}%c${prevRepeat > 1 ? ` (${prevRepeat}x)` : ''} %cat ${time}`,
-        'color: #42b883; font-weight: bold',
-        'color: #ffffff',
-        'color: #42b883; font-weight: bold',
-        'color: #888; font-style: italic'
-    );
-
-    broadcast({
-        type: 'reload',
-        path: relativePath,
-        timestamp: Date.now()
+        broadcast({
+            type: 'reload',
+            path: relativePath,
+            timestamp: Date.now()
+        });
     });
-});
-
+}
 const hasExtension = (url) => /\.[^/]+$/.test(url)
 
 // Frontend server
@@ -65,7 +65,7 @@ const server = http.createServer(async (req, res) => {
     if (pathname === '/') pathname = '/index.html';
     if (!hasExtension(pathname)) pathname = '/index.html';
     // console.log(pathname, hasExtension(pathname));
-    
+
 
     const fullPath = path.join(root, pathname);
     const ext = path.extname(fullPath);
@@ -85,7 +85,7 @@ const server = http.createServer(async (req, res) => {
             // code = injectHMR(code, pathname);
         }
         // console.log("hi");
-        
+
 
         res.end(code);
     } catch {

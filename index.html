@@ -34,12 +34,13 @@
             for (const name of names) out[name] = mod[name];
             return out;
         };
-
     </script>
-    <script type="module" src="./main.js" onload="let el = document.getElementById('script');
-            el.setAttribute('src', `${window.location.origin}/main.js`);
-            el.removeAttribute('onload');
-            el.removeAttribute('id')" id="script" defer></script>
+    <script type="module" id="script" defer></script>
+    <script id="injector" defer>
+        let el = document.getElementById('script');
+        el.setAttribute('src', `${window.location.origin}/main.js`);
+        el.removeAttribute('id'); document.getElementById("injector").remove()
+    </script>
 
 </body>
 

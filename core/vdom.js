@@ -464,8 +464,8 @@ const handleComponent = (parent, old, newOne) => {
 
             if (old.compHooks > newOne.compHooks) {
                 forgot(old.compHooks)
-                // orphan(old.compHooks)
-                allocate(old.compHooks - newOne.compHooks)
+                orphan(old.compHooks - newOne.compHooks)
+                // allocate(old.compHooks - newOne.compHooks)
             } else if (old.compHooks < newOne.compHooks) {
                 forgot(old.compHooks)
                 allocate(newOne.compHooks - old.compHooks)
@@ -488,7 +488,8 @@ const handleComponent = (parent, old, newOne) => {
             return patchComponent(parent, old, newOne)
         }
     } else if (old?.isComp && !newOne?.isComp) {
-        orphan(newOne.compHooks - 1)
+        forgot(old.compHooks)
+        orphan(old.compHooks - 1)
         cleanupVNode(old.vdom)
 
         newOne.el = renderVNode(newOne)

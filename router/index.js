@@ -1,10 +1,10 @@
-import Router from "../core/router.js";
+import { create } from "../core/router.js";
 import { comp } from "../core/vdom.hooks.js";
 import Drill from "../src/pages/Drill.js";
 import Home from "../src/pages/Home.js";
 
-Router.setup({
-    prefix: '/Baria',
+let appRouter = create({
+    prefix: '',
     titleId: 'title',
     routes: [
         {
@@ -20,4 +20,6 @@ Router.setup({
     ]
 })
 
-export default Router;
+const routerView = appRouter.routerView
+
+export { appRouter, routerView };
