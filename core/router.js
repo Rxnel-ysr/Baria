@@ -89,7 +89,8 @@ class Router {
                 }
                 this.option.titleEl.innerText = route.title
             }
-
+            console.log(route);
+            
             return this.routes[path].component()
         }
         else if (typeof this.option?.default == 'function') {
@@ -101,7 +102,7 @@ class Router {
      * 
      * @param {Function} trigger Function to trigger reload
      */
-    init = (trigger) => {
+    use = (trigger) => {
         this.trigger = trigger
     }
 }

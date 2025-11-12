@@ -10,12 +10,12 @@ let appRouter = create({
         {
             uri: '/',
             title: "Baria - Home",
-            component: () => comp(Home, { text: "HOMMEE" })
+            component: Home
         },
         {
             uri: '/drill',
             title: "Baria - Drill",
-            component: () => comp(Drill, { text: "DRILLLLLLLLL" })
+            component: () => comp(Drill)
         }
     ]
 })

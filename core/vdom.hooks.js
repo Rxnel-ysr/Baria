@@ -35,7 +35,9 @@ const forgot = (n = 1) => {
 };
 
 const resetPreview = () => {
-    // previewComponent = headPreview
+    if (previewComponent) {
+        previewComponent = headPreview
+    }
     let current = headPreview
 
     while (current?.next) {

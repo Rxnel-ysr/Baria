@@ -7,7 +7,7 @@ import { appRouter } from "./router/index.js";
 include('style/index.css')
 
 let app = createRoot(App, "#app", "App");
-appRouter.init(triggerRerender)
+appRouter.use(triggerRerender)
 // console.log(app);
 
 if (env.hmr) {

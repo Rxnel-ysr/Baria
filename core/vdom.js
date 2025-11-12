@@ -718,8 +718,16 @@ const html = new Proxy({}, {
             $: (...children) => ({ tag: '#fragment', children: flattenChildren(children) })
         };
 
-        return actions[tag] || ((props = {}, ...children) =>
-            createVNode(tag, props, children));
+        return actions[tag] || ((props = {}, ...children) => {
+            if (typeof props == 'string') {
+                return createVNode(tag, {}, [props])
+            } else if (Array.isArray(props)) {
+                return createVNode(tag, {}, props)
+            }
+            else {
+                return createVNode(tag, props, children)
+            }
+        });
     }
 });
 

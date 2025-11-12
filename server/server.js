@@ -13,6 +13,7 @@ const mimeTypes = {
     '.json': 'application/json',
     '.html': 'text/html',
     '.css': 'text/css',
+    '.png': 'image/png'
 };
 
 const coreFiles = [
@@ -21,6 +22,7 @@ const coreFiles = [
     'vdom.hooks.js',
     'state.js'
 ];
+
 if (env.hmr) {
     const { broadcast } = createWSServer(env.server);
     let prev, prevRepeat = 1;
@@ -66,7 +68,6 @@ const server = http.createServer(async (req, res) => {
     if (!hasExtension(pathname)) pathname = '/index.html';
     // console.log(pathname, hasExtension(pathname));
 
-
     const fullPath = path.join(root, pathname);
     const ext = path.extname(fullPath);
     const basename = path.basename(fullPath);
@@ -78,14 +79,11 @@ const server = http.createServer(async (req, res) => {
         res.setHeader('Cache-Control', 'no-store, must-revalidate');
         res.setHeader('Pragma', 'no-cache');
         res.setHeader('Expires', '0');
-
-
         if (ext === '.js' && !coreFiles.includes(basename)) {
             code = transformImports(code, fullPath);
             // code = injectHMR(code, pathname);
         }
-        // console.log("hi");
-
+        console.log(fullPath);
 
         res.end(code);
     } catch {
