@@ -9,6 +9,7 @@
     <div id="app"></div>
     <script type="module">
         window.hmrImport = async function (path, names) {
+
             const skipReload = [
                 'core/',
                 'misc/',
@@ -17,22 +18,26 @@
                 'router/index.js',
             ];
 
-            for (const pattern of skipReload) {
-                if (path.includes(pattern)) {
-                    const mod = await import(path);
-                    if (names === 'default') return mod.default;
-                    const out = {};
-                    for (const name of names) out[name] = mod[name];
-                    return out;
+            try {
+                for (const pattern of skipReload) {
+                    if (path.includes(pattern)) {
+                        const mod = await import(path);
+                        if (names === 'default') return mod.default;
+                        const out = {};
+                        for (const name of names) out[name] = mod[name];
+                        return out;
+                    }
                 }
+
+                const mod = await import(path + '?t=' + Date.now());
+                if (names === 'default') return mod.default;
+
+                const out = {};
+                for (const name of names) out[name] = mod[name];
+                return out;
+            } catch (err) {
+                console.log(err, path)
             }
-
-            const mod = await import(path + '?t=' + Date.now());
-            if (names === 'default') return mod.default;
-
-            const out = {};
-            for (const name of names) out[name] = mod[name];
-            return out;
         };
     </script>
     <script type="module" id="script" defer></script>

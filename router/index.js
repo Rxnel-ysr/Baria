@@ -20,6 +20,4 @@ let appRouter = create({
     ]
 })
 
-const routerView = appRouter.routerView
-
-export { appRouter, routerView };
+export default appRouter;

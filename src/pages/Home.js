@@ -9,32 +9,32 @@ const Home = () => {
         {
             title: "Baria",
             status: "Website",
-            img: "image/hijau.png",
+            img: "public/image/hijau.png",
             description: "Platform belajar Hiragana, Katakana, dan bahasa Jepang lainnya secara interaktif dan menyenangkan."
         },
         {
             title: "Hiragana",
             status: "Bahasa Jepang",
-            img: "image/cardtwo.png",
+            img: "public/image/cardtwo.png",
             description: "Salah satu aksara dasar dalam bahasa Jepang yang digunakan untuk menulis kata asli Jepang dan partikel."
         },
         {
             title: "Drill",
             status: "Latihan",
-            img: "image/cardthree.png",
+            img: "public/image/cardthree.png",
             description: "Platform belajar Hiragana, Katakana, dan bahasa Jepang lainnya secara interaktif dan menyenangkan.",
             tagLine: true
         },
         {
-            title: "Kim Cattrall",
-            status: "3 hours ago",
-            img: "image/cardfour.png",
+            title: "Achievement",
+            status: "Raih peluang kerja di Jepang",
+            img: "public/image/cardfour.png",
             description: "Latihan yang konsisten akan membawa kamu meraih hasil luar biasa dan pencapaian gemilang."
         },
     ]
 
     return html.$([
-        html.link({ rel: "stylesheet", href: file('public/css/home.css') }),
+        html.link({ rel: "stylesheet", href: file('public/css/style.css') }),
         Hero(),
         LearnCards({
             contents: cardContents

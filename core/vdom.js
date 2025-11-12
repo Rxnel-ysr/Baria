@@ -145,7 +145,7 @@ const updateProps = (el, oldProps, newProps) => {
 };
 
 
-const renderVNode = (vnode) => {
+const renderVNode = (vnode, parentIsSvg = false) => {
     // console.log('Creating', vnode);
     // if (typeof vnode.tag == 'function') {
     //     return createComponent()
@@ -163,12 +163,13 @@ const renderVNode = (vnode) => {
     } else {
         work = vnode
     }
-
     // console.log({ phase1: work });
 
     if (work.tag == '#text') {
         return work.el;
     }
+
+    let isSvg = work.tag == 'svg' || parentIsSvg;
 
     // console.log({ phase2: work });
 
@@ -192,7 +193,7 @@ const renderVNode = (vnode) => {
 
     // console.log({ phase3: work });
 
-    const el = document.createElement(work.tag);
+    const el = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', work.tag) : document.createElement(work.tag);
 
     // console.log({ phase4: work });
 
@@ -201,7 +202,11 @@ const renderVNode = (vnode) => {
         if (key === 'key') setKey(value, work);
 
         if (key === 'class') {
-            el.className = Array.isArray(value) ? value.filter(Boolean).join(' ') : value;
+            if (isSvg) {
+                el.setAttribute('class', Array.isArray(value) ? value.filter(Boolean).join(' ') : value)
+            } else {
+                el.className = Array.isArray(value) ? value.filter(Boolean).join(' ') : value;
+            }
         } else if (key === 'style') {
             if (typeof value === 'string') {
                 el.style.cssText = value;
@@ -214,7 +219,6 @@ const renderVNode = (vnode) => {
         } else {
             el.setAttribute(key, value);
         }
-
     };
     // console.log({ phase5: work });
 
@@ -235,12 +239,12 @@ const renderVNode = (vnode) => {
 
         if (child.tag == '#fragment') {
             for (let frag of child.children) {
-                el.appendChild(renderVNode(frag));
+                el.appendChild(renderVNode(frag, isSvg));
             }
             continue;
         }
 
-        el.appendChild(renderVNode(child));
+        el.appendChild(renderVNode(child, isSvg));
     }
 
 
@@ -628,6 +632,15 @@ const patch = (parent, oldNode, newNode) => {
         }
 
         const el = renderVNode(newNode);
+        parent.replaceChild(el, oldNode.el);
+        newNode.el = el;
+        return newNode;
+    }
+
+    if (newNode.tag === 'svg') {
+        cleanupVNode(oldNode);
+
+        const el = renderVNode(newNode, true);
         parent.replaceChild(el, oldNode.el);
         newNode.el = el;
         return newNode;

@@ -5,7 +5,7 @@ const Footer = () => {
     return html.footer({ class: "footer" }, [
         html.div({ class: "footer-container" }, [
             html.div({ class: "footer-left" }, [
-                html.img({ src: file("image/putih.png"), alt: "Logo Baria", class: "footer-logo" }),
+                html.img({ src: file("public/image/putih.png"), alt: "Logo Baria", class: "footer-logo" }),
                 html.h2({ class: "footer-brand" }, "Baria")
             ]),
 

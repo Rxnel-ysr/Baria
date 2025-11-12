@@ -80,8 +80,9 @@ class Router {
      * @returns {Object} Component
      */
     routerView = (path = location.pathname) => {
+
         let route = this.routes[path];
-        // console.log(path, route);
+        console.log(path, route);
         if (route) {
             if (this.option?.titleId && route?.title) {
                 if (!this.option?.titleEl) {
@@ -89,8 +90,7 @@ class Router {
                 }
                 this.option.titleEl.innerText = route.title
             }
-            console.log(route);
-            
+
             return this.routes[path].component()
         }
         else if (typeof this.option?.default == 'function') {
@@ -103,9 +103,14 @@ class Router {
      * @param {Function} trigger Function to trigger reload
      */
     use = (trigger) => {
+        console.log(trigger);
+        
         this.trigger = trigger
     }
 }
+
+// console.log("HI");
+
 
 let create = Router.make
 

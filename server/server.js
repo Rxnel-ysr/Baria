@@ -13,8 +13,23 @@ const mimeTypes = {
     '.json': 'application/json',
     '.html': 'text/html',
     '.css': 'text/css',
-    '.png': 'image/png'
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.ico': 'image/x-icon',
+    '.webp': 'image/webp',
+    '.svg': 'image/svg+xml'
 };
+
+const binary = [
+    '.png',
+    '.jpeg',
+    '.webp',
+    '.mp3',
+    '.mp4',
+    '.svg'
+]
 
 const coreFiles = [
     'main.js',
@@ -74,18 +89,24 @@ const server = http.createServer(async (req, res) => {
     const type = mimeTypes[ext] || 'text/plain';
 
     try {
-        let code = await fs.readFile(fullPath, 'utf-8');
+        let content;
+
+        if (binary.includes(ext)) {
+            content = await fs.readFile(fullPath);
+        } else {
+            content = await fs.readFile(fullPath, 'utf-8');
+        }
+        // console.log(content);
+
         res.setHeader('Content-Type', type);
         res.setHeader('Cache-Control', 'no-store, must-revalidate');
         res.setHeader('Pragma', 'no-cache');
         res.setHeader('Expires', '0');
+        // console.log("triggered", type);
         if (ext === '.js' && !coreFiles.includes(basename)) {
-            code = transformImports(code, fullPath);
-            // code = injectHMR(code, pathname);
+            content = transformImports(content, fullPath);
         }
-        console.log(fullPath);
-
-        res.end(code);
+        res.end(content);
     } catch {
         res.writeHead(404);
         res.end('404: Not Found');

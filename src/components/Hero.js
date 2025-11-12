@@ -1,4 +1,5 @@
-import { html } from "../../core/vdom.js"
+import { html } from "../../core/vdom.js";
+import { appRouter } from "../../router/index.js";
 
 const Hero = () => {
     return html.main({ class: 'hero', id: 'home' }, [
@@ -10,7 +11,7 @@ const Hero = () => {
             html.p({ class: 'sub' }, "Belajar Hiragana & Katakana Interaktif. Kuasai huruf Jepang dengan latihan seru."),
             html.div({ class: 'cta', id: 'cta' }, [
                 html.a({ class: "btn btn-solid", href: "learn.html" }, "Mulai"),
-                html.a({ class: "btn btn-ghost", href: "learn.html" }, "Tentaing Kami"),
+                html.a({ class: "btn btn-ghost", onclick: () => appRouter.go('/#about') }, "Tentaing Kami"),
             ]),
             html.section({ class: 'features', 'aria-label': 'keunggulan Baria' }, [
                 html.article({ class: 'card' }, [
@@ -30,8 +31,12 @@ const Hero = () => {
                         html.svg({ xmlns: 'http://www.w3.org/2000/svg', width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', class: 'iconVolume' }, [
                             html.polygon({ points: '11 5 6 9 2 9 2 15 6 15 11 19 11 5' }),
                             html.path({ d: 'M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07' })
-                        ])
+                        ]),
                     ]),
+                    html.div([
+                        html.h3("Belajar dengan Atraktif"),
+                        html.p("Audio, animasi goresan, dan kuis interaktif yang menyenangkan."),
+                    ])
                 ])
             ])
         ])

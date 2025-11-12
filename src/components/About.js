@@ -19,7 +19,7 @@ const About = () => {
             ])
         ]),
         html.figure({ class: "abtPhoto" }, [
-            html.img({ src: file("image/hijau.png"), alt: "Profile photo" })
+            html.img({ src: file("public/image/hijau.png"), alt: "Profile photo" })
         ]),
         html.div({ class: "abtGrid" }, [
             html.article({ class: "abtCard abtTint1" }, [
