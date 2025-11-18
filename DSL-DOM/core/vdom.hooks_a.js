@@ -1,17 +1,27 @@
+"use strict";
 import { getHooks, setHooks } from './state.js';
 import { RenderVDOM, getTarget } from './vdom.js';
 
 let currentComponent = null,
     previewComponent = null,
     headPreview = previewComponent,
-    regression = false
+    regression = false,
+    handler = null
+
+if (currentComponent) {
+    currentComponent = null;
+}
+if (previewComponent) {
+    previewComponent = null;
+}
 
 const resetContext = () => {
     currentComponent.hookNode = currentComponent.hooks;
 };
 
 const triggerRerender = () => {
-    if (currentComponent) currentComponent.rerender()
+    console.log("tried to rerender")
+    if (handler) handler()
 }
 
 const setRegression = (bool) => regression = bool
@@ -189,7 +199,7 @@ const comp = (compFn, args = {}) => {
         stringified: JSON.stringify(vdom),
         isComp: true
     };
-    // console.log(ok);
+    console.log('from comp',ok);
     return ok;
 };
 
@@ -335,6 +345,8 @@ const useMemo = (compute, deps) => {
 };
 
 function createRoot(fn, target, id = 'default') {
+    // console.log("runned");
+
     const comp = {
         hooks: { next: null, ...getHooks(id) },
         previewHookNode: { next: null },
@@ -344,28 +356,46 @@ function createRoot(fn, target, id = 'default') {
         renderFn: fn,
         setRenderFn: (fn) => comp.renderFn = fn,
         rerender: () => {
-            currentComponent = comp;
-            previewComponent = comp;
-            resetContext();
-            resetPreview();
-
-            // console.log(comp);
-            const newVNode = comp.renderFn();
-            // console.log('Head preview',headPreview)
-
-            if (!comp.vdom) {
-                comp.vdom = RenderVDOM.render(newVNode, comp.target);
-                // console.log({ thisisvdom: comp.vdom, newVNode });
-            } else {
-                // console.log({ beforeUpdate: comp.vdom, newVNode });
-                // console.log(currentComponent)
-                comp.vdom = RenderVDOM.update(comp.target, comp.vdom, newVNode);
-                // console.log(currentComponent)
-                // console.log({ After: comp.vdom });   
+            try {
+                handler = comp.rerender
+                currentComponent = comp;
+                previewComponent = comp;
+                resetContext();
+                resetPreview();
 
                 // console.log(comp);
+                const newVNode = comp.renderFn();
+                // console.log('Head preview',headPreview)
+
+                console.log({ beforeUpdate: comp?.vdom, newVNode });
+
+                if (!comp.vdom) {
+                    comp.vdom = RenderVDOM.render(newVNode, comp.target);
+                    console.log({ thisisvdom: comp.vdom, newVNode });
+                } else {
+                    // console.log(comp.vdom)
+                    comp.vdom = RenderVDOM.update(comp.target, comp.vdom, newVNode);
+                    // console.log(currentComponent)
+                    // console.log({ After: comp.vdom });   
+
+                }
+
+                // console.log(comp.vdom);
+                setHooks(id, comp.hooks);
+            } catch (error) {
+                console.error(error)
+
+                console.log(comp.vdom)
+
+                // currentComponent = comp;
+                // previewComponent = comp;
+                // resetContext();
+                // resetPreview();
+
+                // // console.log(comp);
+                // const newVNode = comp.renderFn();
+                // comp.vdom = RenderVDOM.render(newVNode, comp.target)
             }
-            setHooks(id, comp.hooks);
         }
     };
     comp.rerender();

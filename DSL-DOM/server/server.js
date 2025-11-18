@@ -1,11 +1,12 @@
 // native-ws-server.js
+"use strict";
 import http from 'http';
 import fs from 'fs/promises';
 import path from 'path';
 // import Url from 'url';
 import { createWSServer } from './webSock.js';
 import { watch } from '../core/file-watcher.js';
-import env from '../env.json' with {type: 'json'}
+import env from '../../env.json' with {type: 'json'}
 
 const root = process.cwd();
 const mimeTypes = {
@@ -33,6 +34,7 @@ const binary = [
 
 const coreFiles = [
     'main.js',
+    'vdom.js',
     'vdom.js',
     'vdom.hooks.js',
     'state.js'
@@ -70,25 +72,29 @@ if (env.hmr) {
             path: relativePath,
             timestamp: Date.now()
         });
+    }, {
+        ignore: [
+            '.git/'
+        ]
     });
 }
 const hasExtension = (url) => /\.[^/]+$/.test(url)
 
 // Frontend server
 const server = http.createServer(async (req, res) => {
-    const parsedUrl = new URL(req.url, `http://${req.headers.host}`);;
-    let pathname = decodeURIComponent(parsedUrl.pathname);
-    pathname = pathname.replace(/\?.*$/, '');
-    if (pathname === '/') pathname = '/index.html';
-    if (!hasExtension(pathname)) pathname = '/index.html';
-    // console.log(pathname, hasExtension(pathname));
-
-    const fullPath = path.join(root, pathname);
-    const ext = path.extname(fullPath);
-    const basename = path.basename(fullPath);
-    const type = mimeTypes[ext] || 'text/plain';
-
     try {
+        const parsedUrl = new URL(req.url, `http://${req.headers.host}`);;
+        let pathname = decodeURIComponent(parsedUrl.pathname);
+        pathname = pathname.replace(/\?.*$/, '');
+        if (pathname === '/') pathname = '/index.html';
+        if (!hasExtension(pathname)) pathname = '/index.html';
+        // console.log(pathname, hasExtension(pathname));
+
+        const fullPath = path.join(root, pathname);
+        const ext = path.extname(fullPath);
+        const basename = path.basename(fullPath);
+        const type = mimeTypes[ext] || 'text/plain';
+
         let content;
 
         if (binary.includes(ext)) {
@@ -99,10 +105,21 @@ const server = http.createServer(async (req, res) => {
         // console.log(content);
 
         res.setHeader('Content-Type', type);
-        res.setHeader('Cache-Control', 'no-store, must-revalidate');
-        res.setHeader('Pragma', 'no-cache');
-        res.setHeader('Expires', '0');
-        // console.log("triggered", type);
+        // res.setHeader('Cache-Control', 'no-store, must-revalidate');
+        // res.setHeader('Pragma', 'no-cache');
+        // res.setHeader('Expires', '0');
+        // Static asset caching policy
+        if (binary.includes(ext)) {
+            // images => long cache + immutable
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+        else if (ext === '.js' && !coreFiles.includes(basename)) {
+            res.setHeader('Cache-Control', 'no-cache');
+        }
+        else {
+            res.setHeader('Cache-Control', 'no-store');
+        }
+
         if (ext === '.js' && !coreFiles.includes(basename)) {
             content = transformImports(content, fullPath);
         }

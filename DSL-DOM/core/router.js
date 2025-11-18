@@ -1,3 +1,6 @@
+"use strict";
+import { html } from "./vdom.js"
+
 class Router {
     routes = {}
     errors = {}
@@ -24,6 +27,13 @@ class Router {
     static make = (option = {}) => {
         return new Router(option)
     }
+
+    scrollToHash = (hash) => {
+        const el = document.querySelector(hash);
+        if (!el) return;
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', hash);
+    };
 
     /**
      * @template {{
@@ -56,7 +66,7 @@ class Router {
     register = (uri, comp) => {
         if (this.option?.prefix) {
             uri = `${this.option?.prefix}${uri}`
-            console.log(uri);
+            // console.log(uri);
 
         }
         this.routes[uri] = comp
@@ -68,21 +78,22 @@ class Router {
      * @param {String} uri 
      */
     go = (uri) => {
-        if (uri !== location.pathname) {
-            history.pushState({ path: uri }, "", uri)
-            this.trigger()
-        }
+        // if (uri !== location.pathname) {
+        // console.log("called")
+        history.pushState({ path: uri }, "", uri)
+        this.trigger()
+        // }
     }
 
     /**
      * 
+     * @param {Object} [args={}] 
      * @param {String} [path=location.pathname] 
      * @returns {Object} Component
      */
-    routerView = (path = location.pathname) => {
-
+    routerView = (args = {}, path = location.pathname) => {
         let route = this.routes[path];
-        console.log(path, route);
+        // console.log(path, route);
         if (route) {
             if (this.option?.titleId && route?.title) {
                 if (!this.option?.titleEl) {
@@ -90,8 +101,12 @@ class Router {
                 }
                 this.option.titleEl.innerText = route.title
             }
-
-            return this.routes[path].component()
+            // console.log(route.component(args))
+            try {
+                return route.component(args)
+            } catch (error) {
+                return html.p(`There was an error...: ${error}`)
+            }
         }
         else if (typeof this.option?.default == 'function') {
             return this.option.default()
@@ -103,8 +118,7 @@ class Router {
      * @param {Function} trigger Function to trigger reload
      */
     use = (trigger) => {
-        console.log(trigger);
-        
+        // console.log(trigger);
         this.trigger = trigger
     }
 }
@@ -112,6 +126,6 @@ class Router {
 // console.log("HI");
 
 
-let create = Router.make
+const create = Router.make
 
 export { Router, create };

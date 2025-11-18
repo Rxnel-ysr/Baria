@@ -1,149 +1,149 @@
 body {
-    margin: 0;
-    font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
-    background: #f6f8f7;
-    color: #101311;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  .container {
-    width: min(1120px, 92%);
-    margin: 0 auto;
-  }
-  
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    background: #fff;
-    border-bottom: 1px solid rgba(16, 19, 17, 0.06);
-  }
-  
-  .nav-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 0;
-  }
-  
-  .nav-right {
-    display: flex;
-  }
-  
-  .barier {
-    display: flex;
-    margin: 0px 30px 0px 30px;
-  }
-  
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .brand b {
-    font-size: 22px;
-    letter-spacing: 0.2px;
-  }
-  
-  .leaf {
-    width: 68px;
-    height: 68px;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 26px;
-    align-items: center;
-    margin-right: 40px;
-  }
-  
-  .nav-links a {
-    color: #334137;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-links a:hover {
-    color: #4CAF50;
-  }
-  
-  .nav-links a.active {
-    color: #2b5b3f; 
-    font-weight: 600;
-    border-bottom: 2px solid #2b5b3f;
-  }
+  margin: 0;
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+  background: #f6f8f7;
+  color: #101311;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  .btn {
-    border: 0;
-    cursor: pointer;
-    padding: 10px 16px;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 14px;
-  }
-  
-  .btn-primary {
-    background: #e8f3ea;
-    color: #2b5b3f;
-    border: 1px solid #bcd8c5;
-    text-decoration: none;
-  }
-  
-  .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 14px rgba(76, 175, 80, 0.15);
-  }
-  
-  .theme {
-    width: 36px;
-    height: 36px;
-    display: grid;
-    place-items: center;
-    border-radius: 999px;
-    border: 1px solid #dfe7e2;
-    background: #fff;
-    margin-left: 10px;
-  }
+.container {
+  width: min(1120px, 92%);
+  margin: 0 auto;
+}
 
-  .navTxt {
-    color: #101311;
-  }
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: #fff;
+  border-bottom: 1px solid rgba(16, 19, 17, 0.06);
+}
 
-.kana-banner{
-  background-color: #437656;        
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+}
+
+.nav-right {
+  display: flex;
+}
+
+.barier {
+  display: flex;
+  margin: 0px 30px 0px 30px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand b {
+  font-size: 22px;
+  letter-spacing: 0.2px;
+}
+
+.leaf {
+  width: 68px;
+  height: 68px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.nav-links a {
+  color: #334137;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #4CAF50;
+}
+
+.nav-links a.active {
+  color: #2b5b3f;
+  font-weight: 600;
+  border-bottom: 2px solid #2b5b3f;
+}
+
+.btn {
+  border: 0;
+  cursor: pointer;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: #e8f3ea;
+  color: #2b5b3f;
+  border: 1px solid #bcd8c5;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(76, 175, 80, 0.15);
+}
+
+.theme {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid #dfe7e2;
+  background: #fff;
+  margin-left: 10px;
+}
+
+.navTxt {
+  color: #101311;
+}
+
+.kana-banner {
+  background-color: #437656;
   color: #ffffff;
-  padding: 18px 20px;           
+  padding: 18px 20px;
 }
 
 
-.kana-inner{
+.kana-inner {
   max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr auto;  
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 24px;
 }
 
-.kana-title{
+.kana-title {
   margin: 0 0 6px;
   letter-spacing: .2px;
 }
 
-.kana-desc{
+.kana-desc {
   margin: 0;
   color: #eef5ef;
-  max-width: 780px;                
+  max-width: 780px;
 }
 
 
-.kana-btn{
+.kana-btn {
   display: inline-block;
   padding: 10px 18px;
   background-color: #ffffff;
@@ -154,22 +154,29 @@ body {
   transition: transform .15s ease, background-color .15s ease, color .15s ease;
 }
 
-.kana-btn:hover{
+.kana-btn:hover {
   background-color: transparent;
   color: #ffffff;
   transform: translateY(-1px);
 }
 
 /* Responsive */
-@media (max-width: 720px){
-  .kana-inner{
-    grid-template-columns: 1fr;    
+@media (max-width: 720px) {
+  .kana-inner {
+    grid-template-columns: 1fr;
   }
-  .kana-cta{
+
+  .kana-cta {
     justify-self: start;
   }
-  .kana-title{ font-size: 24px; }
-  .kana-desc{ font-size: 13.5px; }
+
+  .kana-title {
+    font-size: 24px;
+  }
+
+  .kana-desc {
+    font-size: 13.5px;
+  }
 }
 
 
@@ -178,7 +185,8 @@ body {
 
 /* Footer Utama */
 .footer {
-  background-color: #437656;  /* warna hijau gelap Baria */
+  background-color: #437656;
+  /* warna hijau gelap Baria */
   color: #ffffff;
   padding: 28px 0px;
   font-family: 'Poppins', sans-serif;
@@ -196,7 +204,7 @@ body {
   flex-wrap: wrap;
   max-width: 1200px;
   margin: 0 auto;
-  
+
 }
 
 /* Logo kiri */
@@ -271,18 +279,20 @@ body {
 .iconSosmed {
   color: white;
 }
+
 .deffContainer {
   padding: 14px;
   display: flex;
   justify-content: center;
-  align-items: stretch; /* semua card punya tinggi sama */
+  align-items: stretch;
+  /* semua card punya tinggi sama */
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 40px;
   margin-top: 30px;
 }
 
 .deffCard {
-  width: 400px;
+  width: 600px;
   background-color: #fff;
   border-radius: 15px;
   border: 2px solid #437656;
@@ -290,7 +300,7 @@ body {
   /* Flexbox agar tombol tetap di bawah */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: space-between;
   padding: 20px;
 }
 
@@ -304,9 +314,11 @@ body {
 
 /* Deskripsi */
 .deffDescription {
-  flex: 1; /* biar isi tengah bisa melar */
+  flex: 1;
+  /* biar isi tengah bisa melar */
   margin-top: 10px;
 }
+
 .deffDescription a {
   color: #334137;
   text-decoration: none;
@@ -320,6 +332,7 @@ body {
   margin-top: 20px;
   text-align: left;
 }
+
 .deffBtn a {
   background: #e8f3ea;
   color: #2b5b3f;
@@ -331,4 +344,141 @@ body {
   font-weight: 600;
   font-size: 14px;
   display: inline-block;
+}
+
+
+
+
+.mcui-checkbox {
+  display: flex;
+  align-items: center;
+  user-select: none;
+  padding: 0.6em 0;
+  box-sizing: border-box;
+}
+
+.mcui-checkbox input[type="checkbox"] {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.mcui-checkbox input[type="checkbox"]+div {
+  border: 2px solid #8d9aa9;
+  /* $grey */
+  height: 1.5em;
+  width: 1.5em;
+  box-sizing: border-box;
+  border-radius: 2px;
+  position: relative;
+}
+
+.mcui-checkbox input[type="checkbox"]~div:last-child {
+  padding-left: 0.5em;
+}
+
+.mcui-checkbox input[type="checkbox"]:focus+div,
+.mcui-checkbox input[type="checkbox"]:active+div {
+  outline: 2px dashed #8d9aa9;
+  /* $grey */
+  outline-offset: 2px;
+}
+
+.mcui-checkbox input[type="checkbox"]:checked+div {
+  border-color: #2f6a50;
+  /* $main */
+  transition: border-color 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96);
+  /* $bezier */
+}
+
+.mcui-checkbox input[type="checkbox"]:checked+div .mcui-check {
+  opacity: 1;
+  transition: opacity 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96);
+  /* $bezier */
+}
+
+.mcui-checkbox input[type="checkbox"]:checked+div .mcui-check polyline {
+  animation: dash-check 107ms cubic-bezier(0.65, 0.25, 0.56, 0.96) forwards;
+  /* $bezier */
+}
+
+.mcui-checkbox input[type="checkbox"]:indeterminate+div::after {
+  content: "";
+  height: 4px;
+  width: 60%;
+  left: 20%;
+  top: calc(50% - 2px);
+  position: absolute;
+  background: #8d9aa9;
+  /* $grey */
+  border-radius: 1px;
+}
+
+.mcui-checkbox input[type="checkbox"]:disabled~div {
+  color: #8d9aa9;
+  /* $grey */
+  cursor: not-allowed;
+}
+
+.mcui-checkbox input[type="checkbox"]:enabled~div {
+  cursor: default;
+}
+
+.mcui-check {
+  height: 100%;
+  width: 100%;
+  transform: scale(1);
+  color: #294135;
+  /* $main */
+  opacity: 0;
+}
+
+.mcui-check polyline {
+  fill: none;
+  transform-origin: 50% 50%;
+  stroke-width: 5px;
+  stroke-dasharray: 22.771367900227325;
+  stroke: currentcolor;
+}
+
+.deffInContainer {
+  display: flex;
+}
+
+.inpContainer {
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  padding-left: 80px;
+}
+
+.inp {
+  display: flex;
+}
+
+.headinp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+
+.titleinp {
+  color: #294135;
+  font-size: 30px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.choiceContainer {
+  padding: 20px;
+
+}
+
+.choice a {
+  text-decoration: none;
+  color: #2b5b3f;
+  font-size: 20px;
 }

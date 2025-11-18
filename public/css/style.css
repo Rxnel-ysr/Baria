@@ -74,7 +74,7 @@ body {
 }
 
 .nav-links a.active {
-  color: #2b5b3f; 
+  color: #2b5b3f;
   font-weight: 600;
   border-bottom: 2px solid #2b5b3f;
 }
@@ -92,7 +92,7 @@ body {
   background: #e8f3ea;
   color: #2b5b3f;
   border: 1px solid #bcd8c5;
-  text-decoration:none ;
+  text-decoration: none;
 }
 
 .btn-primary:hover {
@@ -290,10 +290,11 @@ h1 {
 }
 
 .iconVolume {
-  color: #fff; 
+  color: #fff;
 }
+
 .iconFast {
-  color: #fff; 
+  color: #fff;
 }
 
 
@@ -313,14 +314,14 @@ h1 {
 .learnCard {
   position: relative;
   display: block;
-  height: 100%;  
+  height: 100%;
   border-radius: 40px;
   overflow: hidden;
   text-decoration: none;
   border: 1px solid #437656;
 }
 
-.learnCard__image {      
+.learnCard__image {
   width: 100%;
   height: auto;
 }
@@ -330,9 +331,9 @@ h1 {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1;      
-  border-radius: 40px;    
-  background-color: #fff;      
+  z-index: 1;
+  border-radius: 40px;
+  background-color: #fff;
   transform: translateY(100%);
   transition: .2s ease-in-out;
 }
@@ -347,7 +348,7 @@ h1 {
   align-items: center;
   gap: 2em;
   padding: 2em;
-  border-radius: 40px 0 0 0;    
+  border-radius: 40px 0 0 0;
   background-color: #fff;
   transform: translateY(-100%);
   transition: .2s ease-in-out;
@@ -358,13 +359,13 @@ h1 {
   height: 80px;
   position: absolute;
   bottom: 100%;
-  right: 0;      
+  right: 0;
   z-index: 1;
 }
 
 .learnCard__arc path {
   fill: #fff;
-}       
+}
 
 .learnCard:hover .learnCard__header {
   transform: translateY(0);
@@ -373,8 +374,8 @@ h1 {
 .learnCard__thumb {
   flex-shrink: 0;
   width: 50px;
-  height: 50px;      
-  border-radius: 50%;      
+  height: 50px;
+  border-radius: 50%;
 }
 
 .learnCard__title {
@@ -386,9 +387,9 @@ h1 {
 .learnCard__tagline {
   display: block;
   margin: 1em 0;
-  font-family: "MockFlowFont";  
-  font-size: .8em; 
-  color: #D7BDCA;  
+  font-family: "MockFlowFont";
+  font-size: .8em;
+  color: #D7BDCA;
 }
 
 .learnCard__status {
@@ -400,7 +401,7 @@ h1 {
   padding: 0 2em 2em;
   margin: 0;
   color: #D7BDCA;
-  font-family: "Poppins";   
+  font-family: "Poppins";
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -426,6 +427,10 @@ h1 {
   color: #101114;
 }
 
+.dark .abtUs h1 {
+  color: #fff;
+}
+
 .abtUs p {
   color: #6b7280;
   max-width: 420px;
@@ -434,6 +439,10 @@ h1 {
 
 .abtUs .arrow svg {
   color: #111111;
+}
+
+.dark .abtUs .arrow svg {
+  color: #fff;
 }
 
 /* Center image — renamed to abtPhoto */
@@ -516,25 +525,45 @@ h1 {
       "abtUs abtUs"
       "abtPhoto abtGrid";
   }
-  .abtUs { grid-area: abtUs; }
-  .abtPhoto { grid-area: abtPhoto; }
-  .abtGrid { grid-area: abtGrid; }
+
+  .abtUs {
+    grid-area: abtUs;
+  }
+
+  .abtPhoto {
+    grid-area: abtPhoto;
+  }
+
+  .abtGrid {
+    grid-area: abtGrid;
+  }
 }
 
 @media (max-width: 860px) {
-  .resume-wrap { grid-template-columns: 1fr; }
-  .abtGrid { grid-template-columns: 1fr 1fr; }
+  .resume-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .abtGrid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 560px) {
-  .abtUs h1 { font-size: 36px; }
-  .abtGrid { grid-template-columns: 1fr; }
+  .abtUs h1 {
+    font-size: 36px;
+  }
+
+  .abtGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 
 /* Footer Utama */
 .footer {
-  background-color: #437656;  /* warna hijau gelap Baria */
+  background-color: #437656;
+  /* warna hijau gelap Baria */
   color: #ffffff;
   padding: 28px 40px;
   font-family: 'Poppins', sans-serif;

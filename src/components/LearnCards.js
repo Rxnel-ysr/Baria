@@ -1,5 +1,5 @@
-import { file } from "../../core/helper.js"
-import { html } from "../../core/vdom.js"
+import { file } from "../../DSL-DOM/helper/helper.js"
+import { html } from "../../DSL-DOM/core/vdom.js"
 
 /**
  * 
@@ -13,7 +13,7 @@ import { html } from "../../core/vdom.js"
  * @returns 
  */
 const LearnCards = ({ contents = [] }) => {
-    return html.ul({ class: "learnCards"},contents.map(li => html.li([
+    return html.ul({ class: "learnCards" }, contents.map(li => html.li([
         html.a({ class: 'learnCard' }, [
             html.img({ src: file(li.img), class: 'learnCard__image', alt: '' }),
             html.div({ class: 'learnCard__overlay' }, [

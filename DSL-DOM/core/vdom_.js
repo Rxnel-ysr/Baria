@@ -1,3 +1,4 @@
+"use strict";
 import { allocate, forgot, manageComponent, orphan } from "./vdom.hooks.js";
 
 const _keys = {};
@@ -53,7 +54,7 @@ function cleanupVNode(node) {
         // console.log(node.props);
 
         try {
-            node.props?.useCleanup();
+            node.props.useCleanup(node.el);
         } catch (e) {
             // console.warn('VNode cleanup error:', e);
         }
@@ -328,6 +329,64 @@ const patchChildrenWithKeys = (parent, oldChildren, newChildren, parentNode = nu
     return updatedChildren;
 };
 
+const handleComponent = (parent, old, newOne) => {
+    if (old?.isComp && newOne?.isComp) {
+        if (old.stringified !== newOne.stringified) {
+            // console.log("Not same component", parent, old.el, newOne);
+            // current, its based on current hooknode,
+
+            if (old.compHooks > newOne.compHooks) {
+                forgot(old.compHooks)
+                orphan(old.compHooks - newOne.compHooks)
+                // allocate(old.compHooks - newOne.compHooks)
+            } else if (old.compHooks < newOne.compHooks) {
+                forgot(old.compHooks)
+                allocate(newOne.compHooks - old.compHooks)
+                // orphan(old.compHooks)
+            } else if (old.compHooks === newOne.compHooks) {
+                forgot(old.compHooks)
+            }
+            // orphan(old.compHooks)
+            // allocate(old.compHooks)
+            // newOne.vdom = newOne.render()
+            // const newEl = renderVNode(newVDom)
+
+            // parent.replaceChild(newEl, old.el)
+            // newOne.el = newEl
+
+            // return newOne
+
+            return patchComponent(parent, old, newOne)
+        } else {
+            // console.log("Same component", parent, old, newOne);
+            return patchComponent(parent, old, newOne)
+        }
+    } else if (old?.isComp && !newOne?.isComp) {
+        forgot(old.compHooks)
+        orphan(old.compHooks - 1)
+        cleanupVNode(old.vdom)
+
+        newOne.el = renderVNode(newOne)
+
+        parent.replaceChild(newOne.el, old.el)
+
+        return newOne
+    } else if (!old?.isComp && newOne?.isComp) {
+        // console.log("here as initial?")
+        allocate(newOne.compHooks - 1)
+        cleanupVNode(old)
+
+        let newVNode = newOne.vdom = newOne.render()
+
+        newOne.el = renderVNode(newVNode)
+
+        parent.replaceChild(newOne.el, old.el)
+
+        return newOne
+    }
+}
+
+
 const patchComponent = (parent, oldComp, newComp) => {
     newComp.vdom = newComp.render()
     // console.log("Okay gotten here!");
@@ -354,7 +413,7 @@ const patchComponent = (parent, oldComp, newComp) => {
         return newComp;
     }
 
-    if (oldComp?.vdom?.tag === '#fragment' && newComp.vdom?.tag !== '#fragment') {
+    if (oldComp.vdom.tag === '#fragment' && newComp.vdom.tag !== '#fragment') {
         // console.log('Its from fragment');
         let node = oldComp.el;
         const end = oldComp._end;
@@ -374,7 +433,6 @@ const patchComponent = (parent, oldComp, newComp) => {
         parent.replaceChild(newEl, oldComp._end)
         newComp.el = newEl;
         return newComp;
-
     }
 
     if (oldComp.vdom == null && newComp.vdom?.tag === '#fragment') {
@@ -459,63 +517,6 @@ const patchComponent = (parent, oldComp, newComp) => {
     // newComp.vdom = oldComp.vdom
     return newComp;
 }
-
-const handleComponent = (parent, old, newOne) => {
-    if (old?.isComp && newOne?.isComp) {
-        if (old.stringified !== newOne.stringified) {
-            // console.log("Not same component", parent, old.el, newOne);
-            // current, its based on current hooknode,
-
-            if (old.compHooks > newOne.compHooks) {
-                forgot(old.compHooks)
-                orphan(old.compHooks - newOne.compHooks)
-                // allocate(old.compHooks - newOne.compHooks)
-            } else if (old.compHooks < newOne.compHooks) {
-                forgot(old.compHooks)
-                allocate(newOne.compHooks - old.compHooks)
-                // orphan(old.compHooks)
-            } else if (old.compHooks === newOne.compHooks) {
-                forgot(old.compHooks)
-            }
-            // orphan(old.compHooks)
-            // allocate(old.compHooks)
-            let newVDom = newOne.vdom = newOne.render()
-            const newEl = renderVNode(newVDom)
-            // console.log({ parent, old, newOne });
-
-            parent.replaceChild(newEl, old.el)
-            newOne.el = newEl
-
-            return newOne
-        } else {
-            // console.log("Same component", parent, old, newOne);
-            return patchComponent(parent, old, newOne)
-        }
-    } else if (old?.isComp && !newOne?.isComp) {
-        forgot(old.compHooks)
-        orphan(old.compHooks - 1)
-        cleanupVNode(old.vdom)
-
-        newOne.el = renderVNode(newOne)
-
-        parent.replaceChild(newOne.el, old.el)
-
-        return newOne
-    } else if (!old?.isComp && newOne?.isComp) {
-        // console.log("here as initial?")
-        allocate(newOne.compHooks - 1)
-        cleanupVNode(old)
-
-        let newVNode = newOne.vdom = newOne.render()
-
-        newOne.el = renderVNode(newVNode)
-
-        parent.replaceChild(newOne.el, old.el)
-
-        return newOne
-    }
-}
-
 
 const patch = (parent, oldNode, newNode) => {
     // console.log(parent,oldNode, newNode);
@@ -713,6 +714,12 @@ const getTarget = (t, scope = document) => {
     return target;
 };
 
+let customVdom = {}
+
+const registerCustomVdom = (tag, resolver) => {
+    customVdom[tag] = resolver
+}
+
 const html = new Proxy({}, {
     get: (_, tag) => {
         const actions = {
@@ -728,20 +735,21 @@ const html = new Proxy({}, {
             },
             vdom: RenderVDOM,
             _: __,
-            $: (...children) => ({ tag: '#fragment', children: flattenChildren(children) })
+            $: (...children) => ({ tag: '#fragment', children: flattenChildren(children) }),
+            ...customVdom
         };
 
-        return actions[tag] || ((props = {}, ...children) => {
+
+        return actions[tag] || customVdom[tag] || ((props = {}, ...children) => {
             if (typeof props == 'string') {
                 return createVNode(tag, {}, [props])
             } else if (Array.isArray(props)) {
                 return createVNode(tag, {}, props)
-            }
-            else {
+            } else {
                 return createVNode(tag, props, children)
             }
         });
     }
 });
 
-export { html, getTarget, getKey, updateProps, createVNode, renderVNode, cleanupVNode, RenderVDOM, patch };
+export { html, getTarget, getKey, updateProps, createVNode, renderVNode, cleanupVNode, RenderVDOM, patch, registerCustomVdom };

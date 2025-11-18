@@ -1,8 +1,8 @@
-import { file } from "../../core/helper.js";
-import { html } from "../../core/vdom.js";
+import { file } from "../../DSL-DOM/helper/helper.js";
+import { html } from "../../DSL-DOM/core/vdom.js";
 
 
-const About = () => {
+const About = ({ theme }) => {
     return html.section({ class: "resume-wrap", id: "about" }, [
         html.div({ class: "abtUs" }, [
             html.h1("Tentang Baria"),
@@ -10,7 +10,7 @@ const About = () => {
 
             html.div({ class: "arrow" }, [
                 html.svg({
-                    width: "72", height: "72", viewBox: "0 0 24 24", fill: "none", stroke: "#111111", "stroke-width": "2.5",
+                    width: "72", height: "72", viewBox: "0 0 24 24", fill: "none", stroke: theme == 'light' ? "#111111" : "#fff", "stroke-width": "2.5",
                     "stroke-linecap": "round", "stroke-linejoin": "round", "aria-hidden": "true"
                 }, [
                     html.path({ d: "M5 12h14" }),

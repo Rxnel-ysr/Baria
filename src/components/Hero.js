@@ -1,5 +1,4 @@
-import { html } from "../../core/vdom.js";
-import { appRouter } from "../../router/index.js";
+import { html } from "../../DSL-DOM/core/vdom.js";
 
 const Hero = () => {
     return html.main({ class: 'hero', id: 'home' }, [
@@ -11,7 +10,7 @@ const Hero = () => {
             html.p({ class: 'sub' }, "Belajar Hiragana & Katakana Interaktif. Kuasai huruf Jepang dengan latihan seru."),
             html.div({ class: 'cta', id: 'cta' }, [
                 html.a({ class: "btn btn-solid", href: "learn.html" }, "Mulai"),
-                html.a({ class: "btn btn-ghost", onclick: () => appRouter.go('/#about') }, "Tentaing Kami"),
+                html.routerLink({ scrollTo: "#about", class: "btn btn-ghost" }, "Tentang Kami"),
             ]),
             html.section({ class: 'features', 'aria-label': 'keunggulan Baria' }, [
                 html.article({ class: 'card' }, [
@@ -43,4 +42,4 @@ const Hero = () => {
     ])
 }
 
-export default Hero
+export default Hero;

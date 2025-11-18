@@ -2,6 +2,10 @@
 <html>
 
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="description" content="Belajar Hiragana & Katakana Interaktif. Kuasai huruf Jepang dengan latihan seru.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="title"></title>
 </head>
 
@@ -18,32 +22,34 @@
                 'router/index.js',
             ];
 
-            try {
-                for (const pattern of skipReload) {
-                    if (path.includes(pattern)) {
-                        const mod = await import(path);
-                        if (names === 'default') return mod.default;
-                        const out = {};
-                        for (const name of names) out[name] = mod[name];
-                        return out;
-                    }
+            // try {
+            for (const pattern of skipReload) {
+                if (path.includes(pattern)) {
+                    const mod = await import(path);
+                    if (names === 'default') return mod.default;
+                    const out = {};
+                    for (const name of names) out[name] = mod[name];
+                    return out;
                 }
-
-                const mod = await import(path + '?t=' + Date.now());
-                if (names === 'default') return mod.default;
-
-                const out = {};
-                for (const name of names) out[name] = mod[name];
-                return out;
-            } catch (err) {
-                console.log(err, path)
             }
+
+            const mod = await import(path + '?t=' + Date.now());
+            if (names === 'default') return mod.default;
+
+            const out = {};
+            for (const name of names) out[name] = mod[name];
+            return out;
+            // } catch (err) {
+            //     console.log(err, path)
+            // }
         };
     </script>
     <script type="module" id="script" defer></script>
-    <script id="injector" defer>
+    <script type="module" id="injector" defer>
+        import { file } from './DSL-DOM/helper/helper.js'
+
         let el = document.getElementById('script');
-        el.setAttribute('src', `${window.location.origin}/main.js`);
+        el.setAttribute('src', file('main.js'));
         el.removeAttribute('id'); document.getElementById("injector").remove()
     </script>
 

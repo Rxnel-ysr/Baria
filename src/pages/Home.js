@@ -1,10 +1,9 @@
-import { file } from "../../core/helper.js";
-import { html } from "../../core/vdom.js"
+import { html } from "../../DSL-DOM/core/vdom.js"
 import About from "../components/About.js";
 import Hero from "../components/Hero.js";
 import LearnCards from "../components/LearnCards.js";
 
-const Home = () => {
+const Home = ({ theme }) => {
     let cardContents = [
         {
             title: "Baria",
@@ -34,12 +33,11 @@ const Home = () => {
     ]
 
     return html.$([
-        html.link({ rel: "stylesheet", href: file('public/css/style.css') }),
         Hero(),
         LearnCards({
             contents: cardContents
         }),
-        About()
+        About({ theme })
     ])
 }
 
