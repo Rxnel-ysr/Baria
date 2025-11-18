@@ -33,7 +33,14 @@ const sets = {
     }
 };
 
-const Drill = () => {
+const availableDifficulty = {
+    "hardcore": 1,
+    "hard": 3,
+    "medium": 5,
+    "beginner": 10,
+}
+
+const Drill = ({ theme }) => {
     const [mode, setMode] = useState("hiragana");
     const [pool, setPool] = useState([]);
     const [current, setCurrent] = useState(null);
@@ -42,6 +49,13 @@ const Drill = () => {
     const [fails, setFails] = useState(0);
     const [status, setStatus] = useState("menu");
     const [totalQuestions, setTotalQuestions] = useState(0);
+    const [difficulty, setDifficulty] = useState("beginner");
+    const [showMessage, setShowMessage] = useState(false)
+
+    const displayNotice = (message) => {
+        setShowMessage(message)
+        setTimeout(() => setShowMessage(null), 1500)
+    }
 
     const startGame = () => {
         const entries = Object.entries(sets[mode]);
@@ -73,13 +87,17 @@ const Drill = () => {
         if (!current) return;
         if (romaji === current.correct) {
             setScore(s => s + 1);
-            const remaining = pool.slice(1);
-            setPool(remaining);
-            nextRound(remaining);
+            displayNotice("Benar!")
+            setTimeout(() => {
+                const remaining = pool.slice(1);
+                setPool(remaining);
+                nextRound(remaining);
+            }, 1500)
         } else {
+            displayNotice("Salah!")
             setFails(f => {
                 const nf = f + 1;
-                if (nf >= 3) setStatus("fail");
+                if (nf >= availableDifficulty[difficulty]) setStatus("fail");
                 return nf;
             });
         }
@@ -90,7 +108,7 @@ const Drill = () => {
     return html.div({ class: "japanese-drill" }, [
         html.div({ class: "drill-container" },
 
-            html.h1({ class: "drill-title" }, "Japanese Character Drill"),
+            html.h1({ class: "drill-title" }, `${mode[0].toUpperCase() + mode.slice(1)} Character Drill`),
 
             // Menu
             status === "menu" && html.div([
@@ -103,6 +121,23 @@ const Drill = () => {
                         }, m[0].toUpperCase() + m.slice(1))
                     )
                 ),
+                html.div({
+                    style: {
+                        display: 'flex',
+                        flexDirection: 'column'
+                    }
+                }, [
+                    html.h3({ class: 'sub-title text-center' }, "Pilih kesulitan"),
+                    html.p({ class: 'text-center' }, `${difficulty[0].toLocaleUpperCase() + difficulty.slice(1)}: hanya ${availableDifficulty[difficulty]} kali percobaan menebak yang diperbolehkan.`),
+                    html.div({ class: "mode-selector" }, Object.entries(availableDifficulty).map((val) =>
+                        html.button({
+                            class: ["mode-button", difficulty == val[0] ? 'active' : ''],
+                            key: val[0],
+                            title: `Hanya diperbolehkan untuk ${val[1]} kali percobaan menebak`,
+                            onclick: () => setDifficulty(val[0])
+                        }, `${val[0][0].toUpperCase() + val[0].slice(1)}`)
+                    )),
+                ]),
                 html.button({
                     class: "drill-button start-btn",
                     onclick: startGame
@@ -113,6 +148,7 @@ const Drill = () => {
             // Playing
             status === "playing" && current && html.div([
                 html.div({ class: "character-display" }, current.char),
+                showMessage && html.h4({ class: ['text-center', showMessage == 'Benar!' ? 'text-correct' : 'text-failed'] }, showMessage),
                 html.div({ class: "options-grid" },
                     options.map(opt =>
                         html.button({
@@ -130,14 +166,32 @@ const Drill = () => {
                         ),
                         html.div({ class: "score-item" },
                             "Salah:",
-                            html.span({}, `${fails}/3`)
+                            html.span({}, `${fails}/${availableDifficulty[difficulty]}`)
                         ),
+                    ]),
+                    html.div({
+                        class: 'progress', style: {
+                            width: "clamp(400px,500px,20%)",
+                            height: "20px",
+                            background: theme == 'dark' ? "#222" : "#b6bab8",
+                            borderRadius: "6px",
+                            overflow: "hidden"
+
+                        }
+                    }, [
+                        html.div({
+                            style: {
+                                height: "100%",
+                                width: `${score / totalQuestions * 100}%`,
+                                background: "#4fa16d",
+                                transition: "width 0.2s linear"
+                            }
+                        })
                     ]),
                     html.button({ class: "drill-button quit-btn", onclick: () => setStatus('menu') }, "Quit Game")
                 ])
             ]),
 
-            // Game Over / Win
             (status === "fail" || status === "win") && html.div({ class: "game-over" }, [
                 html.h2({
                     class: `result-title ${status}`
@@ -158,10 +212,22 @@ const Drill = () => {
                     )
                 ),
 
-                html.button({
-                    class: "play-again-button",
-                    onclick: startGame
-                }, "Try Again")
+                html.div({
+                    class: 'd-flex flex-row',
+                    style: {
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center'
+                    }
+                }, [
+                    html.button({
+                        class: "drill-button quit-btn",
+                        onclick: () => setStatus('menu')
+                    }, "Quit to menu"),
+                    html.button({
+                        class: "drill-button play-again-button",
+                        onclick: startGame
+                    }, "Try Again"),
+                ])
             ])
         )
     ]);

@@ -6,7 +6,7 @@ import Home from "../src/pages/Home.js";
 import { currentUri } from "../DSL-DOM/helper/helper.js";
 
 const appRouter = create({
-    prefix: '/Baria',
+    prefix: '',
     titleId: 'title',
     routes: [
         {
@@ -17,7 +17,7 @@ const appRouter = create({
         {
             uri: '/drill',
             title: "Baria - Drill",
-            component: () => comp(Drill)
+            component: (args = {}) => comp(Drill, args)
         }
     ]
 })

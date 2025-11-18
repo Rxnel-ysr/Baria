@@ -31,3 +31,5 @@ const App = () => {
 
 
 export default App;
+
+// percentage = num / max * 100

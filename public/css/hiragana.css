@@ -21,7 +21,7 @@
 .drill-title {
   font-size: clamp(2rem, 4vw, 2.5rem);
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   color: #101311;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -29,6 +29,7 @@
 
 .mode-selector {
   display: flex;
+  flex-direction: row;
   gap: 1rem;
   margin-bottom: 2.5rem;
   flex-wrap: wrap;
@@ -184,6 +185,15 @@
   color: #dc2626;
 }
 
+.text-correct {
+  color: #2b5b3f;
+}
+
+
+.text-failed {
+  color: #dc2626;
+}
+
 .play-again-button {
   padding: 1rem 2rem;
   border-radius: 999px;
@@ -309,3 +319,15 @@
 .dark .character-display {
   color: #fff;
 }
+
+.sub-title {
+  color: #366449;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* .dark .text-center{
+  color: #fff;
+} */
