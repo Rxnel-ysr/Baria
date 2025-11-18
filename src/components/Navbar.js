@@ -9,19 +9,19 @@ import { file } from '../../DSL-DOM/helper/helper.js'
 const Navbar = ({ themeToggle, theme, current }) => {
     return html.header({ class: 'nav' }, [
         html.div({ class: "container nav-inner" }, [
-            html.routerLink({ to: '/', class: "brand", "aria-label": "Beranda Baria", style: 'user-select: none;' }, [
+            html.routerLink({ to: "/Baria/", class: "brand", "aria-label": "Beranda Baria", style: 'user-select: none;' }, [
                 html.img({ class: "leaf", src: file("public/image/hijau.png"), alt: "Logo Baria" }),
                 html.b("Baria")
             ]),
 
             html.div({ class: "barier" }, [
                 html.nav({ class: "nav-links", "aria-label": "Navigasi utama" }, [
-                    html.routerLink({ to: "/", scrollTo: "#home", class: [(current == "/#home" || current == '/') ? "active" : ""] }, "Home"),
-                    html.routerLink({ to: "/", scrollTo: "#about", class: [current == "/#about" ? "active" : ""] }, "About"),
-                    html.routerLink({ to: "/drill", class: [current == "/drill" ? "active" : ""] }, "Belajar Huruf"),
+                    html.routerLink({ to: "/Baria/", scrollTo: "#home", class: [(current == "/#home" || current == '/') ? "active" : ""] }, "Home"),
+                    html.routerLink({ to: "/Baria/", scrollTo: "#about", class: [current == "/#about" ? "active" : ""] }, "About"),
+                    html.routerLink({ to: "/Baria/drill", class: [current == "/drill" ? "active" : ""] }, "Belajar Huruf"),
                 ]),
                 html.nav({ class: "nav-right" }, [
-                    html.routerLink({ to: "/drill", class: "btn btn-primary" }, "Mulai"),
+                    html.routerLink({ to: "/Baria/drill", class: "btn btn-primary" }, "Mulai"),
                     html.button({ class: "theme", onclick: themeToggle, "aria-label": "Ganti tema siang/malam", title: "Toggle Tema" }, [
                         theme == 'dark'
                             ? html.svg({

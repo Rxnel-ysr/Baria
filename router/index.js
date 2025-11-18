@@ -3,7 +3,6 @@ import { comp } from "../DSL-DOM/core/vdom.hooks.js";
 import { createVNode, pushJob, registerCustomVdom } from "../DSL-DOM/core/vdom.js";
 import Drill from "../src/pages/Drill.js";
 import Home from "../src/pages/Home.js";
-import env from /** Skip */ '../env.json' with {type: 'json'}
 import { currentUri } from "../DSL-DOM/helper/helper.js";
 
 const appRouter = create({
