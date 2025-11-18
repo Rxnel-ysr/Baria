@@ -16,7 +16,7 @@ const Navbar = ({ themeToggle, theme, current }) => {
 
             html.div({ class: "barier" }, [
                 html.nav({ class: "nav-links", "aria-label": "Navigasi utama" }, [
-                    html.routerLink({ to: "/Baria/", scrollTo: "#home", class: [(current == "/Baria/#home" || current == '/Baria/') ? "active" : ""] }, "Home"),
+                    html.routerLink({ to: "/Baria/", scrollTo: "#home", class: [(current == "/Baria/#home" || current == "/Baria/") ? "active" : ""] }, "Home"),
                     html.routerLink({ to: "/Baria/", scrollTo: "#about", class: [current == "/Baria/#about" ? "active" : ""] }, "About"),
                     html.routerLink({ to: "/Baria/drill", class: [current == "/Baria/drill" ? "active" : ""] }, "Belajar Huruf"),
                 ]),
