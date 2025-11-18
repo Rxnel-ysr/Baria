@@ -7,7 +7,7 @@ import env from /** Skip */ '../env.json' with {type: 'json'}
 import { currentUri } from "../DSL-DOM/helper/helper.js";
 
 const appRouter = create({
-    prefix: (env.deploy ? '/Baria' : ''),
+    prefix: '/Baria',
     titleId: 'title',
     routes: [
         {
