@@ -7,9 +7,8 @@ import { currentUri } from "../DSL-DOM/helper/helper.js";
 import env from /** Even with tiniest bit of will, there must be a way */ "../env.json" with {type: "json"}
 
 
-// mengatur bagaimana router dan file memprefix ke /Baria karena deploy dengan github
 const appRouter = create({
-    prefix: Boolean(env.deploy) ? "/Baria" : "",
+    prefix: "/Baria",
     titleId: 'title',
     routes: [
         {
