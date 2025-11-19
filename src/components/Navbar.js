@@ -2,7 +2,7 @@ import { html } from "../../DSL-DOM/core/vdom.js"
 import { file } from '../../DSL-DOM/helper/helper.js'
 
 /**
- * 
+ * "/Baria"
  * @param {{themeToggle: () => void, theme: Boolean, current: String}} 
  * @returns 
  */
@@ -16,9 +16,9 @@ const Navbar = ({ themeToggle, theme, current }) => {
 
             html.div({ class: "barier" }, [
                 html.nav({ class: "nav-links", "aria-label": "Navigasi utama" }, [
-                    html.routerLink({ to: "/", scrollTo: "#home", class: [(current == "/#home" || current == "/") ? "active" : ""] }, "Home"),
-                    html.routerLink({ to: "/", scrollTo: "#about", class: [current == "/#about" ? "active" : ""] }, "About"),
-                    html.routerLink({ to: "/drill", class: [current == "/drill" ? "active" : ""] }, "Belajar Huruf"),
+                    html.routerLink({ to: "/Baria/", scrollTo: "#home", class: [(current == "/Baria/#home" || current == "/Baria/") ? "active" : ""] }, "Home"),
+                    html.routerLink({ to: "/Baria/", scrollTo: "#about", class: [current == "/Baria/#about" ? "active" : ""] }, "About"),
+                    html.routerLink({ to: "/Baria/drill", class: [current == "/Baria/drill" ? "active" : ""] }, "Belajar Huruf"),
                 ]),
                 html.nav({ class: "nav-right" }, [
                     html.routerLink({ to: "/Baria/drill", class: "btn btn-primary" }, "Mulai"),
