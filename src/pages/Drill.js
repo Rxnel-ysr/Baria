@@ -1,4 +1,5 @@
-import { useState, useEffect } from "../../DSL-DOM/core/vdom.hooks.js"
+import { useState, } from "../../DSL-DOM/core/vdom.hooks.js"
+import { file } from "../../DSL-DOM/helper/helper.js"
 import { html } from "../../DSL-DOM/core/vdom.js"
 
 const sets = {
@@ -34,10 +35,22 @@ const sets = {
 };
 
 const availableDifficulty = {
-    "hardcore": 1,
+    "hardcore": 0,
     "hard": 3,
-    "medium": 5,
+    "normal": 5,
     "beginner": 10,
+}
+
+const audioMap = {
+    correct: file("public/audio/Sfx-Correct.mp3"),
+    wrong: file("public/audio/Sfx-Wrong-v2.mp3"),
+    theme: {
+        beginner: file("public/audio/Theme-Beginner.mp3"),
+        normal: file("public/audio/Theme-Normal.mp3"),
+        hard: file("public/audio/Theme-Hard.mp3"),
+        hardcore: file("public/audio/Theme-Hardcore.mp3"),
+    },
+    win: file("public/audio/Sfx-Win.mp3")
 }
 
 const Drill = ({ theme }) => {
@@ -51,10 +64,41 @@ const Drill = ({ theme }) => {
     const [totalQuestions, setTotalQuestions] = useState(0);
     const [difficulty, setDifficulty] = useState("beginner");
     const [showMessage, setShowMessage] = useState(false)
+    const [backsound, setBackSound] = useState(null)
+
+    const playAudioLoop = async (src) => {
+        const sfx = new Audio(src);
+        sfx.loop = true;
+        sfx.volume = 0.9
+        sfx.play()
+        return sfx;
+    }
+
+    const playTheme = (mode) => {
+        if (!backsound)
+            setBackSound(playAudioLoop(audioMap['theme'][mode]))
+    }
+
+    const stopTheme = () => {
+        if (!backsound)
+            return;
+
+        // console.log(backsound.fulfilled, backsound)
+        backsound.then((a) => {
+            a.pause()
+            setBackSound(null)
+        })
+
+        // setBackSound(null)
+    }
+
+    const playAudio = async (src) => {
+        return (new Audio(src)).play()
+    }
 
     const displayNotice = (message) => {
         setShowMessage(message)
-        setTimeout(() => setShowMessage(null), 1500)
+        setTimeout(() => setShowMessage(null), 500)
     }
 
     const startGame = () => {
@@ -66,11 +110,14 @@ const Drill = ({ theme }) => {
         setTotalQuestions(shuffled.length);
         setStatus("playing");
         nextRound(shuffled);
+        playTheme(difficulty)
     };
 
     const nextRound = (remaining) => {
         if (remaining.length === 0) {
             setStatus("win");
+            stopTheme()
+            playAudio(audioMap['win'])
             return;
         }
         const [char, correct] = remaining[0];
@@ -84,20 +131,26 @@ const Drill = ({ theme }) => {
     };
 
     const handleGuess = (romaji) => {
-        if (!current) return;
+        // console.log("Faked mastery, is not mastery at all")
         if (romaji === current.correct) {
-            setScore(s => s + 1);
+            playAudio(audioMap['correct'])
             displayNotice("Benar!")
             setTimeout(() => {
+                playAudio(audioMap['progressBar'])
+                setScore(s => s + 1);
                 const remaining = pool.slice(1);
                 setPool(remaining);
                 nextRound(remaining);
-            }, 1500)
+            }, 500)
         } else {
             displayNotice("Salah!")
+            playAudio(audioMap['wrong'])
             setFails(f => {
                 const nf = f + 1;
-                if (nf >= availableDifficulty[difficulty]) setStatus("fail");
+                if (nf > availableDifficulty[difficulty]) {
+                    stopTheme()
+                    setStatus("fail")
+                };
                 return nf;
             });
         }
@@ -122,18 +175,15 @@ const Drill = ({ theme }) => {
                     )
                 ),
                 html.div({
-                    style: {
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }
+                    class: 'd-flex flex-column'
                 }, [
                     html.h3({ class: 'sub-title text-center' }, "Pilih kesulitan"),
-                    html.p({ class: 'text-center' }, `${difficulty[0].toLocaleUpperCase() + difficulty.slice(1)}: hanya ${availableDifficulty[difficulty]} kali percobaan menebak yang diperbolehkan.`),
+                    html.p({ class: 'text-center' }, `${difficulty[0].toLocaleUpperCase() + difficulty.slice(1)}: ${availableDifficulty[difficulty] == 0 ? 'Tidak ada kesempatan kedua.' : ('hanya ' + availableDifficulty[difficulty] + ' kali percobaan menebak yang diperbolehkan.')}`),
                     html.div({ class: "mode-selector" }, Object.entries(availableDifficulty).map((val) =>
                         html.button({
                             class: ["mode-button", difficulty == val[0] ? 'active' : ''],
                             key: val[0],
-                            title: `Hanya diperbolehkan untuk ${val[1]} kali percobaan menebak`,
+                            title: val[1] == 0 ? 'Hanya satu percobaan' : `Hanya diperbolehkan untuk ${val[1]} kali percobaan menebak`,
                             onclick: () => setDifficulty(val[0])
                         }, `${val[0][0].toUpperCase() + val[0].slice(1)}`)
                     )),
@@ -148,13 +198,15 @@ const Drill = ({ theme }) => {
             // Playing
             status === "playing" && current && html.div([
                 html.div({ class: "character-display" }, current.char),
-                showMessage && html.h4({ class: ['text-center', showMessage == 'Benar!' ? 'text-correct' : 'text-failed'] }, showMessage),
+                showMessage && html.h3({ class: ['text-center', showMessage == 'Benar!' ? 'text-correct' : 'text-failed'], style: { color: "#fff" } }, showMessage),
                 html.div({ class: "options-grid" },
                     options.map(opt =>
                         html.button({
                             key: opt,
                             class: "option-button",
-                            onclick: () => handleGuess(opt)
+                            onclick: (e) => {
+                                handleGuess(opt)
+                            }
                         }, opt)
                     )
                 ),
@@ -166,7 +218,7 @@ const Drill = ({ theme }) => {
                         ),
                         html.div({ class: "score-item" },
                             "Salah:",
-                            html.span({}, `${fails}/${availableDifficulty[difficulty]}`)
+                            html.span({}, availableDifficulty[difficulty] == 0 ? "Tidak Diperbolehkan." : `${fails}/${availableDifficulty[difficulty]}`)
                         ),
                     ]),
                     html.div({
@@ -188,10 +240,11 @@ const Drill = ({ theme }) => {
                             }
                         })
                     ]),
-                    html.button({ class: "drill-button quit-btn", onclick: () => setStatus('menu') }, "Quit Game")
+                    html.button({ class: "drill-button quit-btn", onclick: () => { setStatus('menu'), stopTheme() } }, "Quit Game")
                 ])
             ]),
 
+            // Fail / Win
             (status === "fail" || status === "win") && html.div({ class: "game-over" }, [
                 html.h2({
                     class: `result-title ${status}`

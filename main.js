@@ -1,18 +1,15 @@
-import appRouter from /** Skip reload */ "./router/index.js";
+import appRouter from "./router/index.js";
 import { createRoot, triggerRerender } from "./DSL-DOM/core/vdom.hooks.js";
 import App from "./src/app.js";
-import env from './env.json' with {type: 'json'}
+import env from /** Mere text dare to make me confused... VSCode, DELETE IT!! */ './env.json' with {type: 'json'}
 
 let app = createRoot(App, "#app", "App");
-
 appRouter.use(triggerRerender)
-// console.log(app);
 
 if (env.hmr) {
     const socket = new WebSocket(`ws://${location.hostname}:${env.server}`);
 
     socket.addEventListener('message', async ({ data }) => {
-        // console.log('message was reciveed')
         const msg = JSON.parse(data);
         if (msg.type === 'reload') {
             try {
@@ -31,3 +28,12 @@ if (env.hmr) {
     });
 }
 
+/**
+ * (이봐요, 에레나, 무얼하나?)
+ * (종일토록 멍하니 앉아)
+ * (어떤 공상 그리할까?)
+ * (시집가는 꿈을 꾸나?)
+ * (시집가는 꿈을 꾸나?)
+ * (시집가는 꿈을 꾸나?)
+ * 財從八方來 財 (시집가는 꿈을 꾸나?)
+ */

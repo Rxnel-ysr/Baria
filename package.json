@@ -1,6 +1,6 @@
 {
   "name": "DSL-DOM",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "A reverse enginered React",
   "keywords": [
     "native"
@@ -14,4 +14,3 @@
     "dev": "node DSL-DOM/server/server.js"
   }
 }
-    

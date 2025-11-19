@@ -4,9 +4,12 @@ import { createVNode, pushJob, registerCustomVdom } from "../DSL-DOM/core/vdom.j
 import Drill from "../src/pages/Drill.js";
 import Home from "../src/pages/Home.js";
 import { currentUri } from "../DSL-DOM/helper/helper.js";
+import env from /** Even with tiniest bit of will, there must be a way */ "../env.json" with {type: "json"}
 
+
+// mengatur bagaimana router dan file memprefix ke /Baria karena deploy dengan github
 const appRouter = create({
-    prefix: '',
+    prefix: Boolean(env.deploy) ? "/Baria" : "",
     titleId: 'title',
     routes: [
         {

@@ -4,9 +4,10 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=7">
     <meta name="description" content="Belajar Hiragana & Katakana Interaktif. Kuasai huruf Jepang dengan latihan seru.">
+    <link rel="icon" href="public/image/hijau.png" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="title"></title>
+    <title id="title">Baria - Tempat belajar Hiragana, Katakana dan Kanji</title>
 </head>
 
 <body>
@@ -15,14 +16,12 @@
         window.hmrImport = async function (path, names) {
 
             const skipReload = [
-                'core/',
-                'misc/',
-                'core/vdom.js',
-                'vdom.hooks.js',
+                'DSL-DOM/core/',
+                'DSL-DOM/core/vdom.js',
+                'DSL-DOM/core/vdom.hooks.js',
                 'router/index.js',
             ];
 
-            // try {
             for (const pattern of skipReload) {
                 if (path.includes(pattern)) {
                     const mod = await import(path);
@@ -39,9 +38,6 @@
             const out = {};
             for (const name of names) out[name] = mod[name];
             return out;
-            // } catch (err) {
-            //     console.log(err, path)
-            // }
         };
     </script>
     <script type="module" id="script" defer></script>
