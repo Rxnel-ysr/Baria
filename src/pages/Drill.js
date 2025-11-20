@@ -200,7 +200,7 @@ const Drill = ({ theme }) => {
             // Playing
             status === "playing" && current && html.div([
                 html.div({ class: "character-display" }, current.char),
-                showMessage && html.h3({ class: ['text-center', showMessage == 'Benar!' ? 'text-correct' : 'text-failed'], style: { color: "#fff" } }, showMessage),
+                showMessage && html.h3({ class: ['text-center', showMessage == 'Benar!' ? 'text-correct' : 'text-failed'] }, showMessage),
                 html.div({ class: "options-grid" },
                     options.map(opt =>
                         html.button({
