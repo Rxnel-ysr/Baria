@@ -4,8 +4,6 @@ import { createVNode, pushJob, registerCustomVdom } from "../DSL-DOM/core/vdom.j
 import Drill from "../src/pages/Drill.js";
 import Home from "../src/pages/Home.js";
 import { currentUri } from "../DSL-DOM/helper/helper.js";
-import env from /** Even with tiniest bit of will, there must be a way */ "../env.json" with {type: "json"}
-
 
 const appRouter = create({
     prefix: "/Baria",
@@ -27,10 +25,10 @@ const appRouter = create({
 registerCustomVdom('routerLink', (props = {}, ...children) => {
     let destination = props?.to || ''
     let scroll = props?.scrollTo || ''
+    let finalDestination = props.href = `${destination}${scroll}`
 
     delete props.to
     delete props.scrollTo
-    let finalDestination = props.href = `${destination}${scroll}`
 
     return createVNode('a', {
         ...props, onclick: (e) => {

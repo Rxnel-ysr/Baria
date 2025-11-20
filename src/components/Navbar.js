@@ -9,7 +9,7 @@ import { file } from '../../DSL-DOM/helper/helper.js'
 const Navbar = ({ themeToggle, theme, current }) => {
     return html.header({ class: 'nav' }, [
         html.div({ class: "container nav-inner" }, [
-            html.routerLink({ to: "/", class: "brand", "aria-label": "Beranda Baria", style: 'user-select: none;' }, [
+            html.routerLink({ to: "/Baria/", class: "brand", "aria-label": "Beranda Baria", style: 'user-select: none;' }, [
                 html.img({ class: "leaf", src: file("public/image/hijau.png"), alt: "Logo Baria" }),
                 html.b("Baria")
             ]),

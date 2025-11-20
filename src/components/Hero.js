@@ -9,7 +9,7 @@ const Hero = () => {
             html.h1(["Tulis, dengar, dan kuasai huruf", html.br(), "Jepang dengan cara seru."]),
             html.p({ class: 'sub' }, "Belajar Hiragana & Katakana Interaktif. Kuasai huruf Jepang dengan latihan seru."),
             html.div({ class: 'cta', id: 'cta' }, [
-                html.a({ class: "btn btn-solid", href: "learn.html" }, "Mulai"),
+                html.routerLink({ to: "/Baria/drill", class: "btn btn-solid"}, "Mulai"),
                 html.routerLink({ scrollTo: "#about", class: "btn btn-ghost" }, "Tentang Kami"),
             ]),
             html.section({ class: 'features', 'aria-label': 'keunggulan Baria' }, [
