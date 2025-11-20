@@ -131,7 +131,7 @@ const Drill = ({ theme }) => {
     };
 
     const handleGuess = (romaji) => {
-        // console.log("Faked mastery, is not mastery at all")
+        // console.log("IT does run")
         if (romaji === current.correct) {
             playAudio(audioMap['correct'])
             displayNotice("Benar!")

@@ -1,10 +1,8 @@
 "use strict";
 import { allocate, forgot, orphan } from "./vdom.hooks.js";
 
-// Enhanced job system with DOM operations
 let jobs = []
 const _keys = {};
-const getKeyVal = key => _keys[key] ?? null
 const getKey = vnode => vnode?.props?.key ?? null;
 const hasKey = vnode => vnode && typeof vnode.props?.key !== 'undefined';
 const setKey = (key, vnode) => _keys[key] = vnode.el
