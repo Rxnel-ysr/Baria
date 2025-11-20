@@ -158,7 +158,9 @@ const Drill = ({ theme }) => {
 
     const accuracy = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
 
-    return html.div({ class: "japanese-drill" }, [
+    return html.div({
+        class: "japanese-drill", useCleanup: () => stopTheme()
+    }, [
         html.div({ class: "drill-container" },
 
             html.h1({ class: "drill-title" }, `${mode[0].toUpperCase() + mode.slice(1)} Character Drill`),
