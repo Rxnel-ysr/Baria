@@ -3,8 +3,8 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <meta name="description" content="Belajar Hiragana & Katakana Interaktif. Kuasai huruf Jepang dengan latihan seru.">
-    <link rel="icon" href="public/image/hijau.png" />
+    <meta name="description" content="Belajar Hiragana, Katakana dan kanji Interaktif. Kuasai huruf Jepang dengan latihan seru.">
+    <link rel="icon" href="./public/image/hijau.png" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="title">Baria - Tempat belajar Hiragana, Katakana dan Kanji</title>
@@ -12,38 +12,9 @@
 
 <body>
     <div id="app"></div>
-    <script type="module">
-        window.hmrImport = async function (path, names) {
-
-            const skipReload = [
-                'DSL-DOM/core/',
-                'DSL-DOM/core/vdom.js',
-                'DSL-DOM/core/vdom.hooks.js',
-                'router/index.js',
-            ];
-
-            for (const pattern of skipReload) {
-                if (path.includes(pattern)) {
-                    const mod = await import(path);
-                    if (names === 'default') return mod.default;
-                    const out = {};
-                    for (const name of names) out[name] = mod[name];
-                    return out;
-                }
-            }
-
-            const mod = await import(path + '?t=' + Date.now());
-            if (names === 'default') return mod.default;
-
-            const out = {};
-            for (const name of names) out[name] = mod[name];
-            return out;
-        };
-    </script>
     <script type="module" id="script" defer></script>
     <script type="module" id="injector" defer>
         import { file } from './DSL-DOM/helper/helper.js'
-
         let el = document.getElementById('script');
         el.setAttribute('src', file('main.js'));
         el.removeAttribute('id'); document.getElementById("injector").remove()
