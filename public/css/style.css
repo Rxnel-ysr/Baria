@@ -29,6 +29,7 @@ body {
 
 .nav-right {
   display: flex;
+  gap: 0.5rem;
 }
 
 .barier {
@@ -108,7 +109,6 @@ body {
   border-radius: 999px;
   border: 1px solid #dfe7e2;
   background: #fff;
-  margin-left: 10px;
 }
 
 .hero {

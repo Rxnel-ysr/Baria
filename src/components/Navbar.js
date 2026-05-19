@@ -1,4 +1,4 @@
-import { useEffect, useState } from "../../DSL-DOM/core/vdom.hooks.js"
+import { useState } from "../../DSL-DOM/core/vdom.hooks.js"
 import { html } from "../../DSL-DOM/core/vdom.js"
 import { file } from '../../DSL-DOM/helper/helper.js'
 import { setLanguage, t } from "../../translate/translator.js"
@@ -10,9 +10,6 @@ import { setLanguage, t } from "../../translate/translator.js"
  */
 const Navbar = ({ themeToggle, theme, current }) => {
     const [currentLang, setCurrentLang] = useState('en');
-    useEffect(() => {
-        setLanguage(currentLang);
-    }, [currentLang])
     return html.header({ class: 'nav' }, [
         html.div({ class: "container nav-inner" }, [
             html.routerLink({ to: "/Baria/", class: "brand", "aria-label": "Beranda Baria", style: 'user-select: none;' }, [
@@ -28,6 +25,15 @@ const Navbar = ({ themeToggle, theme, current }) => {
                 ]),
                 html.nav({ class: "nav-right" }, [
                     html.routerLink({ to: "/Baria/drill", class: "btn btn-primary" }, t("Mulai")),
+                    html.select({
+                        class: 'lang-select', onchange: (e) => {
+                            setLanguage(e.target.value)
+                            setCurrentLang(e.target.value)
+                        }
+                    }, [
+                        html.option({ value: 'en', selected: true }, "EN"),
+                        html.option({ value: 'id' }, "ID")
+                    ]),
                     html.button({ class: "theme", onclick: themeToggle, "aria-label": t("Ganti tema siang/malam"), title: t("Toggle Tema") }, [
                         theme == 'dark'
                             ? html.svg({
@@ -51,10 +57,6 @@ const Navbar = ({ themeToggle, theme, current }) => {
                             }, [
                                 html.path({ d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" })
                             ])
-                    ]),
-                    html.select({ class: 'lang-select', onchange: (e) => setCurrentLang(e.target.value) }, [
-                        html.option({ value: 'en', selected: true }, "EN"),
-                        html.option({ value: 'id' }, "ID")
                     ])
                 ])
             ])

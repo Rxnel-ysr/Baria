@@ -1,9 +1,11 @@
-let currentMap = null
+import en from "./locales/en.json" with {type: 'json'}
+
+let currentMap = en,
+    known = { en }
 
 async function setLanguage(lang) {
     try {
-        const module = await import(`./locales/${lang}.json`, { assert: { type: 'json' } })
-        currentMap = module.default
+        currentMap = known[lang] ?? null
     } catch (e) {
 
     }
