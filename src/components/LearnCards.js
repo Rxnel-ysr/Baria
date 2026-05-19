@@ -1,5 +1,6 @@
 import { file } from "../../DSL-DOM/helper/helper.js"
 import { html } from "../../DSL-DOM/core/vdom.js"
+import { t } from "../../translate/translator.js"
 
 /**
  * 
@@ -23,12 +24,12 @@ const LearnCards = ({ contents = [] }) => {
                     ]),
                     html.img({ class: "learnCard__thumb", src: file(li.img), alt: "" }),
                     html.div({ class: "learnCard__header-text" }, [
-                        html.h3({ class: "learnCard__title" }, `${li.title}`),
+                        html.h3({ class: "learnCard__title" }, `${t(li.title)}`),
                         li?.tagLine && html.span({ class: "learnCard__tagline" }),
-                        html.span({ class: "learnCard__status" }, `${li.status}`)
+                        html.span({ class: "learnCard__status" }, `${t(li.status)}`)
                     ])
                 ]),
-                html.p({ class: "learnCard__description" }, `${li.description}`)
+                html.p({ class: "learnCard__description" }, `${t(li.description)}`)
             ])
         ]),
     ])))

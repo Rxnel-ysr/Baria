@@ -232,6 +232,42 @@ h1 {
   height: 40px;
 }
 
+.lang-select {
+  appearance: none;
+  background: #e8f3ea;
+  border: 1px solid #bcd8c5;
+  border-radius: 999px;
+  color: #2b5b3f;
+  cursor: pointer;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 28px 10px 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232b5b3f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lang-select:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(76, 175, 80, 0.15);
+}
+
+.lang-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #bcd8c5;
+}
+
+/* Dark mode */
+.dark .lang-select {
+  background-color: #153f25;
+  color: #cfe6d8;
+  border-color: #245a35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23cfe6d8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+
+
 @media (max-width: 760px) {
   .nav-links {
     display: none;

@@ -1,5 +1,6 @@
 import { file } from "../../DSL-DOM/helper/helper.js"
 import { html } from "../../DSL-DOM/core/vdom.js"
+import { t } from "../../translate/translator.js"
 
 const Footer = () => {
     return html.footer({ class: "footer" }, [
@@ -10,7 +11,7 @@ const Footer = () => {
             ]),
 
             html.div({ class: "footer-center" }, [
-                html.p(["Baria adalah Platform Pembelajaran yang digunakan", html.br(), "untuk Upgrade ilmu dan wawasan secara lengkap."])
+                html.p([t("Baria adalah Platform Pembelajaran yang digunakan"), html.br(), t("untuk Upgrade ilmu dan wawasan secara lengkap.")])
             ]),
 
             html.div({ class: "footer-right" }, [

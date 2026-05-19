@@ -1,4 +1,5 @@
 import { html } from "../../DSL-DOM/core/vdom.js";
+import { t } from "../../translate/translator.js";
 
 const Hero = () => {
     return html.main({ class: 'hero', id: 'home' }, [
@@ -6,11 +7,11 @@ const Hero = () => {
         html.span({ class: 'kana k-right', 'aria-hidden': true }, "お"),
 
         html.div({ class: 'container hero-inner' }, [
-            html.h1(["Tulis, dengar, dan kuasai huruf", html.br(), "Jepang dengan cara seru."]),
-            html.p({ class: 'sub' }, "Belajar Hiragana & Katakana Interaktif. Kuasai huruf Jepang dengan latihan seru."),
+            html.h1([t("Tulis, dengar, dan kuasai huruf"), html.br(), t("Jepang dengan cara seru.")]),
+            html.p({ class: 'sub' }, t("Belajar Hiragana & Katakana Interaktif. Kuasai huruf Jepang dengan latihan seru.")),
             html.div({ class: 'cta', id: 'cta' }, [
-                html.routerLink({ to: "/Baria/drill", class: "btn btn-solid"}, "Mulai"),
-                html.routerLink({ scrollTo: "#about", class: "btn btn-ghost" }, "Tentang Kami"),
+                html.routerLink({ to: "/Baria/drill", class: "btn btn-solid"}, t("Mulai")),
+                html.routerLink({ scrollTo: "#about", class: "btn btn-ghost" }, t("Tentang Kami")),
             ]),
             html.section({ class: 'features', 'aria-label': 'keunggulan Baria' }, [
                 html.article({ class: 'card' }, [
@@ -21,8 +22,8 @@ const Hero = () => {
                         ])
                     ]),
                     html.div([
-                        html.h3("Belajar dengan Cepat"),
-                        html.p("Drill cerdas dan pengulangan terjadwal untuk hafal lebih lama."),
+                        html.h3(t("Belajar dengan Cepat")),
+                        html.p(t("Drill cerdas dan pengulangan terjadwal untuk hafal lebih lama.")),
                     ])
                 ]),
                 html.article({ class: 'card' }, [
@@ -33,8 +34,8 @@ const Hero = () => {
                         ]),
                     ]),
                     html.div([
-                        html.h3("Belajar dengan Atraktif"),
-                        html.p("Audio, animasi goresan, dan kuis interaktif yang menyenangkan."),
+                        html.h3(t("Belajar dengan Atraktif")),
+                        html.p(t("Audio, animasi goresan, dan kuis interaktif yang menyenangkan.")),
                     ])
                 ])
             ])

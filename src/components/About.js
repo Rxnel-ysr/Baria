@@ -1,12 +1,13 @@
 import { file } from "../../DSL-DOM/helper/helper.js";
 import { html } from "../../DSL-DOM/core/vdom.js";
+import { t } from "../../translate/translator.js";
 
 
 const About = ({ theme }) => {
     return html.section({ class: "resume-wrap", id: "about" }, [
         html.div({ class: "abtUs" }, [
-            html.h1("Tentang Baria"),
-            html.p("Belajar Hiragana & Katakana dengan cara yang santai, visual, dan mudah diingat."),
+            html.h1(t("Tentang Baria")),
+            html.p(t("Belajar Hiragana & Katakana dengan cara yang santai, visual, dan mudah diingat.")),
 
             html.div({ class: "arrow" }, [
                 html.svg({
@@ -24,25 +25,25 @@ const About = ({ theme }) => {
         html.div({ class: "abtGrid" }, [
             html.article({ class: "abtCard abtTint1" }, [
                 html.h3("About Baria"),
-                html.p("Platform belajar Jepang untuk pemula yang fokus pada visual dan latihan praktis."),
+                html.p(t("Platform belajar Jepang untuk pemula yang fokus pada visual dan latihan praktis.")),
                 html.a({ class: "abtLink", href: "#" }, "View More")
             ]),
 
             html.article({ class: "abtCard" }, [
                 html.h3("What We Do"),
-                html.p("Membantu kamu kuasai Hiragana & Katakana lewat drill harian yang menyenangkan."),
+                html.p(t("Membantu kamu kuasai Hiragana & Katakana lewat drill harian yang menyenangkan.")),
                 html.a({ class: "abtLink", href: "#" }, "View More")
             ]),
 
             html.article({ class: "abtCard" }, [
                 html.h3("How It Works"),
-                html.p("Pilih => Belajar => Latih => Sertifikat. Semua dalam 5 menit sehari."),
+                html.p(t("Pilih => Belajar => Latih => Sertifikat. Semua dalam 5 menit sehari.")),
                 html.a({ class: "abtLink", href: "#" }, "View More")
             ]),
 
             html.article({ class: "abtCard abtTint2" }, [
                 html.h3("Join Baria"),
-                html.p("Belajar Bahasa Jepang tanpa hafalan. Cuma butuh konsistensi, bukan waktu banyak."),
+                html.p(t("Belajar Bahasa Jepang tanpa hafalan. Cuma butuh konsistensi, bukan waktu banyak.")),
                 html.a({ class: "abtLink", href: "#" }, "View More")
             ]),
         ])
