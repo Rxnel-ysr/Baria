@@ -13,4 +13,4 @@ Atau langsung kunjungi [Baria](https://rxnel-ysr.github.io/Baria/) untuk mengunj
 - [@SanShiros](https://www.github.com/SanShiros)
 
 ## DSL-VDOM
-[Repo](https:/github.com/Rxnel-ysr/DSL-VDOM) 
+[Repo](https://github.com/Rxnel-ysr/DSL-VDOM) 
