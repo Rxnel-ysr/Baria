@@ -7,7 +7,7 @@ async function setLanguage(lang) {
     try {
         currentMap = known[lang] ?? null
     } catch (e) {
-
+        currentMap = {}
     }
 }
 
@@ -16,4 +16,9 @@ function t(key) {
     return currentMap[key] ?? key
 }
 
-export { t, setLanguage }
+function getCurrentCode() {
+    if (!currentMap) return null;
+    return currentMap['__CODE'] ?? null;
+}
+
+export { t, setLanguage, getCurrentCode }

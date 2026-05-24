@@ -1,6 +1,7 @@
-import { useState, } from "../../DSL-DOM/core/vdom.hooks.js"
+import { useEffect, useState, } from "../../DSL-DOM/core/vdom.hooks.js"
 import { file } from "../../DSL-DOM/helper/helper.js"
 import { html } from "../../DSL-DOM/core/vdom.js"
+import { getCurrentCode, t } from "../../translate/translator.js";
 
 const sets = {
     hiragana: {
@@ -179,8 +180,8 @@ const Drill = ({ theme }) => {
                 html.div({
                     class: 'd-flex flex-column'
                 }, [
-                    html.h3({ class: 'sub-title text-center' }, "Pilih kesulitan"),
-                    html.p({ class: 'text-center' }, `${difficulty[0].toLocaleUpperCase() + difficulty.slice(1)}: ${availableDifficulty[difficulty] == 0 ? 'Tidak ada kesempatan kedua.' : ('hanya ' + availableDifficulty[difficulty] + ' kali percobaan menebak yang diperbolehkan.')}`),
+                    html.h3({ class: 'sub-title text-center' }, t("Pilih kesulitan")),
+                    html.p({ class: 'text-center' }, `${difficulty[0].toLocaleUpperCase() + difficulty.slice(1)}: ${availableDifficulty[difficulty] == 0 ? 'Tidak ada kesempatan kedua.' : (t('hanya ') + availableDifficulty[difficulty] + t(' kali percobaan menebak yang diperbolehkan.'))}`),
                     html.div({ class: "mode-selector" }, Object.entries(availableDifficulty).map((val) =>
                         html.button({
                             class: ["mode-button", difficulty == val[0] ? 'active' : ''],
@@ -193,7 +194,7 @@ const Drill = ({ theme }) => {
                 html.button({
                     class: "drill-button start-btn",
                     onclick: startGame
-                }, "Start Drill")
+                }, t("Mulai Latihan"))
             ]),
 
 
@@ -215,12 +216,12 @@ const Drill = ({ theme }) => {
                 html.div({ class: "score-display" }, [
                     html.div({ class: "sub-score-display" }, [
                         html.div({ class: "score-item" },
-                            "Benar:",
+                            t("Benar:"),
                             html.span({}, `${score}/${totalQuestions}`)
                         ),
                         html.div({ class: "score-item" },
-                            "Salah:",
-                            html.span({}, availableDifficulty[difficulty] == 0 ? "Tidak Diperbolehkan." : `${fails}/${availableDifficulty[difficulty]}`)
+                            t("Salah:"),
+                            html.span({}, availableDifficulty[difficulty] == 0 ? t("Tidak Diperbolehkan") : `${fails}/${availableDifficulty[difficulty]}`)
                         ),
                     ]),
                     html.div({
@@ -242,7 +243,7 @@ const Drill = ({ theme }) => {
                             }
                         })
                     ]),
-                    html.button({ class: "drill-button quit-btn", onclick: () => { setStatus('menu'), stopTheme() } }, "Quit Game")
+                    html.button({ class: "drill-button quit-btn", onclick: () => { setStatus('menu'), stopTheme() } }, t("Keluar"))
                 ])
             ]),
 
@@ -250,20 +251,20 @@ const Drill = ({ theme }) => {
             (status === "fail" || status === "win") && html.div({ class: "game-over" }, [
                 html.h2({
                     class: `result-title ${status}`
-                }, status === "fail" ? "Practice Complete" : "Excellent Work!"),
+                }, status === "fail" ? t("Latihan Selesai") : t("Kerja Bagus!")),
 
                 html.div({ class: "stats-grid" },
                     html.div({ class: "stat-card" },
                         html.div({ class: "stat-number" }, score),
-                        html.div({ class: "stat-label" }, "Correct Answers")
+                        html.div({ class: "stat-label" }, t("Jawaban Benar"))
                     ),
                     html.div({ class: "stat-card" },
                         html.div({ class: "stat-number" }, totalQuestions),
-                        html.div({ class: "stat-label" }, "Total Questions")
+                        html.div({ class: "stat-label" }, t("Total Pertanyaan"))
                     ),
                     html.div({ class: "stat-card" },
                         html.div({ class: "stat-number" }, `${accuracy}%`),
-                        html.div({ class: "stat-label" }, "Accuracy")
+                        html.div({ class: "stat-label" }, t("Akurasi"))
                     )
                 ),
 
@@ -277,11 +278,11 @@ const Drill = ({ theme }) => {
                     html.button({
                         class: "drill-button quit-btn",
                         onclick: () => setStatus('menu')
-                    }, "Quit to menu"),
+                    }, t("Kembali Ke Menu")),
                     html.button({
                         class: "drill-button play-again-button",
                         onclick: startGame
-                    }, "Try Again"),
+                    }, t("Coba Lagi")),
                 ])
             ])
         )

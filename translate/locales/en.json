@@ -1,4 +1,5 @@
 {
+  "__CODE": 1,
   "Baria": "Baria",
   "Website": "Website",
   "Bahasa Jepang": "Japanese Language",
@@ -26,5 +27,20 @@
   "untuk Upgrade ilmu dan wawasan secara lengkap.": "comprehensively expand your knowledge and horizons.",
   "Belajar Huruf": "Learning Characters",
   "Ganti tema siang/malam": "Toggle light/dark theme",
-  "Toogle Tema": "Theme Toogle"
+  "Toogle Tema": "Theme Toogle",
+  "Mulai Latihan": "Start Drill",
+  "Kembali Ke Menu": "Quit to menu",
+  "Coba Lagi": "Try Again",
+  "Jawaban Benar": "Correct Answers",
+  "Total Pertanyaan": "Total Questions",
+  "Akurasi": "Accuracy",
+  "Latihan Selesai": "Practice Complete",
+  "Kerja Bagus!": "Excellent Work!",
+  "Keluar": "Quit",
+  "Tidak Diperbolehkan.": "Not Allowed.",
+  "Salah:": "Wrong:",
+  "Benar:": "Correct:",
+  "hanya ": "only ",
+  " kali percobaan menebak yang diperbolehkan.": " guessing changes allowed.",
+  "Pilih kesulitan": "Pick Difficulty"
 }
